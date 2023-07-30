@@ -1,0 +1,80 @@
+Todo.Controller <- \(id, data) {
+  moduleServer(
+    id,
+    \(input, output, session) {
+
+      observeEvent(input[['create']], { coordinator[['create']](input[["newTask"]]) })
+      observeEvent(input[["todos_rows_selected"]], { coordinator[["select"]](input[["todos_rows_selected"]]) }, ignoreNULL = FALSE )
+      observeEvent(input[["update"]], { coordinator[["update"]]() })
+      observeEvent(input[["delete"]], { coordinator[["delete"]]() })
+
+      state <- reactiveValues()
+      state[["todos"]] <- data[['Retrieve']]()
+      state[["todo"]]  <- NULL
+      
+      validation <- NULL
+      validation[["isTaskEmpty"]] <- reactive(input[["newTask"]] == '')
+      validation[["isTodoSelected"]] <- reactive(!is.null(input[["todos_rows_selected"]]))
+
+      coordinator <- list()
+      coordinator[['create']] <- \(task) {
+        if (!validation[["isTaskEmpty"]]()) {
+          # Use the data layer to create a new todo
+          task |> Todo.Model() |> data[['Add']]()
+          # Use the data layer to update local state
+          state[["todos"]] <- data[['Retrieve']]()
+          # Clear the input
+          session |> updateTextInput("task", value = '')
+        }
+      }
+      coordinator[['select']] <- \(id) {
+        if (validation[["isTodoSelected"]]()) {
+          state[["todo"]] <- state[["todos"]][id,]
+
+          session |> updateTextInput("task", value = state[["todo"]][["Task"]])
+          session |> updateTextInput("status", value = state[["todo"]][["Status"]])
+
+        } else {
+          state[["todo"]] <- NULL
+        }
+      }
+      coordinator[['update']] <- \() {
+        data.frame(
+          Id = state[["todo"]][["Id"]],
+          Task = input[["task"]],
+          Status = input[["status"]]
+        ) |> data[["Update"]]()
+
+        state[["todos"]] <- data[['Retrieve']]()
+      }
+      coordinator[['delete']] <- \() {
+        state[["todo"]][["Id"]] |> data[['Delete']]()
+        state[["todos"]] <- data[['Retrieve']]()
+      }
+
+      output[["todos"]] <- DT::renderDataTable({
+        DT::datatable(
+          state[["todos"]] |> select(Id, Status, Task),
+          selection = 'single',
+          rownames = FALSE,
+          colnames = c("", ""),
+          options = list(
+            dom = "t",
+            ordering = FALSE,
+            columnDefs = list(
+              list(visible = FALSE, targets = 0),
+              list(width = '50px', targets = 1),
+              list(className = 'dt-center', targets = 1),
+              list(className = 'dt-left', targets = 2)
+            )
+          )
+        )
+      })  
+
+      output[["isSelectedTodoVisible"]] <- reactive({ is.data.frame(state[["todo"]]) })
+
+      # CONFIGURATION
+      outputOptions(output, "isSelectedTodoVisible", suspendWhenHidden = FALSE) 
+    }
+  )
+}
