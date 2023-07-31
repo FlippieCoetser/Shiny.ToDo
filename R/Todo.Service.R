@@ -7,6 +7,7 @@
 #' @export
 Todo.Service <- \(broker){
   validate.structure <- Todo.Structure.Validation.Service()
+  validate.logic     <- Todo.Logic.Validation.Service()
   
   services <- list()
 
@@ -15,7 +16,7 @@ Todo.Service <- \(broker){
     
     todo |>
       validate.structure[['Todo']]() |>
-      validate.structure[['IsDuplicate']](todos)
+      validate.logic[['IsDuplicate']](todos)
     
     todo |>
       broker[['Insert']]()
