@@ -1,239 +1,193 @@
-test_that("Todo.Broker Exist",{
-  Todo.Broker |>
-    is.null() |>
-      expect_equal(FALSE)
-})
-
-test_that("configuration |> Todo.Broker() returns a list of operations",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # Then
-  todo.broker |>
-    is.list() |>
-      expect_equal(TRUE)
-})
-
-test_that("todo.broker instance has Insert operation",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # Then
-  todo.broker[['Insert']] |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("todo |> todo.broker[['Insert']]() creates a new todo into storage",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  todo <- data.frame(
-    Id = uuid::UUIDgenerate(),
-    Task = 'Task',
-    Status = 'New'
-  )
-
-  new.todo <- todo
-  expected.todo <- new.todo
-
-  # When
-  new.todo |>
-    todo.broker[['Insert']]()
-
-  # Then
-  new.todo[['Id']] |>
-    storage[['Todo']][['SelectWhereId']]() |>
-      expect_equal(expected.todo)
-})
-
-test_that("todo.broker instance has Select operation",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # Then
-  todo.broker[['Select']] |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("todo.broker[['Select']]() retrieves todos from storage",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # When
-  todos <- todo.broker[['Select']]()
-
-  # Then
-  storage[['Todo']][['Select']]() |>
-    expect_equal(todos)
-})
-
-test_that("todo.broker instance has SelectById operation",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # Then
-  todo.broker[['SelectById']] |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("id |> todo.broker[['SelectById']]() retrieves todo with matching id from storage",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  existing.todo <-
-    storage[['Todo']][['Select']]() |>
-      tail(1)
-
-  input.todo <- existing.todo
-  expected.todo <- existing.todo
-
-  # When
-  retrieved.todo <-
-    input.todo[['Id']] |>
-      todo.broker[['SelectById']]()
-
-  # Then
-  retrieved.todo[['Id']]     |> expect_equal(existing.todo[["Id"]])
-  retrieved.todo[['Task']]   |> expect_equal(existing.todo[["Task"]])
-  retrieved.todo[['Status']] |> expect_equal(existing.todo[["Status"]])
-})
-
-test_that("todo.broker instance has Update operation",{
+describe('Given Todo.Broker',{
+  it('exist',{
     # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  # Then
-  todo.broker[['Update']] |>
-    is.null()             |>
-      expect_equal(FALSE)
+    Todo.Broker |> expect.exist()
+  })
 })
 
-test_that("todo |> broker[['Update']]() updates existing todo in storage",{
-  # Given
-  configuration <- data.frame()
-
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
-
-  todo.broker <-
-    storage |> Todo.Broker()
-
-  existing.todo <-
-    storage[['Todo']][['Select']]() |>
-      tail(1)
-
-  updated.todo <- existing.todo
-  updated.todo[['Status']] <- 'Done'
-
-  expected.todo <- updated.todo
-
-  # When
-  updated.todo |> todo.broker[['Update']]()
-
-  retrieved.todo <-
-    updated.todo[['Id']] |>
-      storage[['Todo']][['SelectWhereId']]()
-
-  # Then
-  updated.todo[['Id']]     |> expect_equal(retrieved.todo[['Id']])
-  updated.todo[['Task']]   |> expect_equal(retrieved.todo[['Task']])
-  updated.todo[['Status']] |> expect_equal(retrieved.todo[['Status']])
-})
-
-test_that("todo.broker instance has Delete operation",{
+describe('When operations <- storage |> Todo.Broker()',{
+  it('then operations is a list',{
     # Given
-  configuration <- data.frame()
+    configuration <- data.frame()
 
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
+    storage <- configuration |> Storage::Mock.Storage.Service()
 
-  # When
-  todo.broker <-
-    storage |> Todo.Broker()
+    # When
+    operations <- storage |> Todo.Broker()
 
-  # Then
-  todo.broker[['Delete']] |>
-    is.null()             |>
-      expect_equal(FALSE)
+    # Then
+    operations |> expect.list()
+  })
+  it('then operations contains Insert operation',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    operations <- storage |> Todo.Broker()
+
+    # Then
+    operations[['Insert']] |> expect.exist()
+  })
+  it('then operations contains Select operation',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    operations <- storage |> Todo.Broker()
+
+    # Then
+    operations[['Select']] |> expect.exist()
+  })
+  it('then operations contains SelectById operation',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    operations <- storage |> Todo.Broker()
+
+    # Then
+    operations[['SelectById']] |> expect.exist()
+  })
+  it('then operations contains Update operation',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    operations <- storage |> Todo.Broker()
+
+    # Then
+    operations[['Update']] |> expect.exist()
+  })
+  it('then operations contains Delete operation',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    operations <- storage |> Todo.Broker()
+
+    # Then
+    operations[['Delete']] |> expect.exist()
+  })
 })
 
-test_that("id |> todo.broker[['Delete']]() deletes todo with matching id from storage",{
-  # Given
-  configuration <- data.frame()
+describe("When todo |> operation[['Insert']]()",{
+  it('then todo is inserted into storage',{
+    # Given
+    configuration <- data.frame()
 
-  storage <-
-    configuration |> Storage::Mock.Storage.Service()
+    storage <- configuration |> Storage::Mock.Storage.Service()
 
-  todo.broker <-
-    storage |> Todo.Broker()
+    operation <- storage |> Todo.Broker()
 
-  existing.todo <-
-    storage[['Todo']][['Select']]() |>
-      tail(1)
+    random.todo <- 'Task' |> Todo.Model()
 
-  # When
-  existing.todo[['Id']] |>
-    todo.broker[['Delete']]()
+    new.todo      <- random.todo
+    expected.todo <- new.todo
 
-  # Then
-  existing.todo[['Id']] |>
-    storage[['Todo']][['SelectWhereId']]() |>
-      nrow() |>
-        expect_equal(0)
+    # When
+    new.todo |> operation[['Insert']]()
+
+    # Then
+    retrieved.todo <- new.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() 
+    
+    retrieved.todo |> expect.equal(expected.todo)
+  })
+})
+describe("When operation[['Select']]()",{
+  it('then all todos are retrieved from storage',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    operation <- storage |> Todo.Broker()
+
+    expected.todos <- storage[['Todo']][['Select']]()
+
+    # When
+    retrieved.todos <- operation[['Select']]()
+
+    # Then
+    retrieved.todos |> expect.equal(expected.todos)
+  })
+})
+describe("When id |> operation[['SelectById']]()",{
+  it('then todo with matching id is retrieved from storage',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    operation <- storage |> Todo.Broker()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    input.todo    <- existing.todo
+    expected.todo <- existing.todo
+
+    # When
+    retrieved.todo <- input.todo[['Id']] |> operation[['SelectById']]()
+
+    # Then
+    retrieved.todo[['Id']]     |> expect.equal(expected.todo[["Id"]])
+    retrieved.todo[['Task']]   |> expect.equal(expected.todo[["Task"]])
+    retrieved.todo[['Status']] |> expect.equal(expected.todo[["Status"]])
+  })
+})
+describe("When todo |> operation[['Update']]()",{
+  it('then todo is updated in storage',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    operation <- storage |> Todo.Broker()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    updated.todo <- existing.todo
+    updated.todo[['Status']] <- 'Done'
+
+    expected.todo <- updated.todo
+
+    # When
+    updated.todo |> operation[['Update']]()
+
+    # Then
+    retrieved.todo <- updated.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]()
+
+    updated.todo[['Id']]     |> expect_equal(retrieved.todo[['Id']])
+    updated.todo[['Task']]   |> expect_equal(retrieved.todo[['Task']])
+    updated.todo[['Status']] |> expect_equal(retrieved.todo[['Status']])
+  })
+})
+describe("When id |> operation[['Delete']]()",{
+  it("then todo with matching id is deleted from storage",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    operation <- storage |> Todo.Broker()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    # When
+    existing.todo[['Id']] |> operation[['Delete']]()
+
+    # Then
+    retrieved.todo <- existing.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() 
+    
+    retrieved.todo |> expect.empty()
+  })
 })

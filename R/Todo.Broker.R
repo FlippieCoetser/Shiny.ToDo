@@ -4,7 +4,6 @@
 #'  This is the broker which contains primary operations for the Todo Model.
 #'
 #' @usage NULL
-#' @export
 Todo.Broker <- \(storage){
   operations <- list()
 
