@@ -1,207 +1,191 @@
-test_that("Todo.Exceptions Exist",{
-  Todo.Exceptions |>
-    is.null() |>
-      expect_equal(FALSE)
+describe('Given Todo.Exceptions',{
+  it('exist',{
+    # Given
+    Todo.Exceptions |> expect.exist()
+  })
 })
 
-test_that("Todo.Exceptions() returns a list of exceptions",{
-  # Given
-  exceptions <- Todo.Exceptions()
+describe('When exceptions <- Todo.Exceptions()',{
+  it('then exceptions is a list',{
+    # Given
+    exceptions <- Todo.Exceptions()
 
-  # Then
-  exceptions |>
-    is.list() |>
-      expect_equal(TRUE)
+    # Then
+    exceptions |> expect.list()
+  })
+  it('then exceptions contains TodoIsNull exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['TodoIsNull']] |> expect.exist()
+  })
+  it('then exceptions contains TodoIdIsNull exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['TodoIdIsNull']] |> expect.exist()
+  })
+  it('then exceptions contains TodoTaskIsNull exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['TodoTaskIsNull']] |> expect.exist()
+  })
+  it('then exceptions contains TodoStatusIsNull exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['TodoStatusIsNull']] |> expect.exist()
+  })
+  it('then exceptions contains DuplicateKey exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['DuplicateKey']] |> expect.exist()
+  })
+  it('then exceptions contains IdIsNull exception',{
+    # Given
+    exceptions <- Todo.Exceptions()
+
+    # Then
+    exceptions[['IdIsNull']] |> expect.exist()
+  })
 })
 
-test_that("Todo.Exceptions instance has TodoIsNull exception",{
-  # Given
-  exception <- Todo.Exceptions()
+describe("When input |> exception[['TodoIsNull']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-  # Then
-  exception[["TodoIsNull"]]  |>
-    is.null()             |>
-      expect_equal(FALSE)
+    input <- FALSE
+
+    # Then
+    input |> exception[["TodoIsNull"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
+
+    input <- TRUE
+
+    expected.error <- 'successful validation requires a data frame with todo'
+
+    # Then
+    input |> exception[["TodoIsNull"]]() |> expect.error(expected.error)
+  })
 })
+describe("When input |> exception[['TodoIdIsNull']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-test_that("FALSE |> exception[['TodoIsNull']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
+    input <- FALSE
 
-  # Then
-  FALSE |>
-    exception[["TodoIsNull"]]() |>
-      expect_no_error()
+    # Then
+    input |> exception[["TodoIdIsNull"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
+
+    input <- TRUE
+
+    expected.error <- 'todo data frame has no Id'
+
+    # Then
+    input |> exception[["TodoIdIsNull"]]() |> expect.error(expected.error)
+  })
 })
+describe("When input |> exception[['TodoTaskIsNull']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-test_that("TRUE |> exception[['TodoIsNull']]() should throw TodoIsNull error",{
-  # Given
-  exception <- Todo.Exceptions()
+    input <- FALSE
 
-  error <- 'successful validation requires a data frame with todo'
+    # Then
+    input |> exception[["TodoTaskIsNull"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-  # Then
-  TRUE |>
-    exception[["TodoIsNull"]]() |>
-      expect_error(error)
+    input <- TRUE
+
+    expected.error <- 'todo data frame has no Task'
+
+    # Then
+    input |> exception[["TodoTaskIsNull"]]() |> expect.error(expected.error)
+  })
 })
+describe("When input |> exception[['TodoStatusIsNull']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-test_that("Todo.Exceptions instance has TodoIdIsNull exception",{
-  # Given
-  exception <- Todo.Exceptions()
+    input <- FALSE
 
-  # Then
-  exception[["TodoIdIsNull"]]  |>
-    is.null()             |>
-      expect_equal(FALSE)
+    # Then
+    input |> exception[["TodoStatusIsNull"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
+
+    input <- TRUE
+
+    expected.error <- 'todo data frame has no Status'
+
+    # Then
+    input |> exception[["TodoStatusIsNull"]]() |> expect.error(expected.error)
+  })
 })
+describe("When input |> exception[['DuplicateKey']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-test_that("FALSE |> exception[['TodoIdIsNull']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
+    input <- FALSE
 
-  # Then
-  FALSE |>
-    exception[["TodoIdIsNull"]]() |>
-      expect_no_error()
+    # Then
+    input |> exception[["DuplicateKey"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
+
+    input <- TRUE
+
+    expected.error <- 'todo already exist, duplicate key not allowed'
+
+    # Then
+    input |> exception[["DuplicateKey"]]() |> expect.error(expected.error)
+  })
 })
+describe("When input |> exception[['IdIsNull']]()",{
+  it('then no exception is thrown if input is FALSE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-test_that("TRUE |> exception[['TodoIdIsNull']]() should throw TodoIdIsNull error",{
-  # Given
-  exception <- Todo.Exceptions()
+    input <- FALSE
 
-  error <- 'todo data frame has no Id'
+    # Then
+    input |> exception[["IdIsNull"]]() |> expect.no.error()
+  })
+  it('then an exception is thrown if input is TRUE',{
+    # Given
+    exception <- Todo.Exceptions()
 
-  # Then
-  TRUE |>
-    exception[["TodoIdIsNull"]]() |>
-      expect_error(error)
-})
+    input <- TRUE
 
-test_that("Todo.Exceptions instance has TodoTaskIsNull exception",{
-  # Given
-  exception <- Todo.Exceptions()
+    expected.error <- 'successful validation requires an Id'
 
-  # Then
-  exception[["TodoTaskIsNull"]] |>
-    is.null() |>
-      expect_equal(FALSE)
-})
-
-test_that("FALSE |> exception[['TodoTaskIsNull']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  FALSE |>
-    exception[["TodoTaskIsNull"]]() |>
-      expect_no_error()
-})
-
-test_that("TRUE |> exception[['TodoTaskIsNull']]() should throw TodoTaskIsNull error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  error <- 'todo data frame has no Task'
-
-  # Then
-  TRUE |>
-    exception[["TodoTaskIsNull"]]() |>
-      expect_error(error)
-})
-
-test_that("Todo.Exceptions instance has TodoStatusIsNull exception",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  exception[["TodoStatusIsNull"]]  |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("FALSE |> exception[['TodoStatusIsNull']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  FALSE |>
-    exception[["TodoStatusIsNull"]]() |>
-      expect_no_error()
-})
-
-test_that("TRUE |> exception[['TodoStatusIsNull']]() should throw TodoStatusIsNull error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  error <- 'todo data frame has no Status'
-
-  # Then
-  TRUE |>
-    exception[["TodoStatusIsNull"]]() |>
-      expect_error(error)
-})
-
-test_that("Todo.Exceptions instance has DuplicateKey exception",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  exception[["DuplicateKey"]]  |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("FALSE |> exception[['DuplicateKey']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  FALSE |>
-    exception[["DuplicateKey"]]() |>
-      expect_no_error()
-})
-
-test_that("TRUE |> exception[['DuplicateKey']]() should throw DuplicateKey error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  error <- 'todo already exist, duplicate key not allowed'
-
-  # Then
-  TRUE |>
-    exception[["DuplicateKey"]]() |>
-      expect_error(error)
-})
-
-test_that("Todo.Exceptions instance has IdIsNull exception",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  exception[["IdIsNull"]]  |>
-    is.null()             |>
-      expect_equal(FALSE)
-})
-
-test_that("FALSE |> exception[['IdIsNull']]() should not throw error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  # Then
-  FALSE |>
-    exception[["IdIsNull"]]() |>
-      expect_no_error()
-})
-
-test_that("TRUE |> exception[['IdIsNull']]() should throw IdIsNull error",{
-  # Given
-  exception <- Todo.Exceptions()
-
-  error <- 'successful validation requires an Id'
-
-  # Then
-  TRUE |>
-    exception[["IdIsNull"]]() |>
-      expect_error(error)
+    # Then
+    input |> exception[["IdIsNull"]]() |> expect.error(expected.error)
+  })
 })
