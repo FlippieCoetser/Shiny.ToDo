@@ -1,5 +1,5 @@
 Todo.Structure.Validation.Service <- \(){
-  exception <- Todo.Model.Exceptions()
+  exception <- Todo.Exceptions()
   
   validators <- list()
 

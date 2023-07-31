@@ -1,4 +1,4 @@
-Todo.Model.Exceptions <- \(){
+Todo.Exceptions <- \(){
   exceptions <- list()
 
   # Structural Validation Exceptions
