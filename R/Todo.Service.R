@@ -6,7 +6,7 @@
 #' @usage NULL
 #' @export
 Todo.Service <- \(broker){
-  validate <- Todo.Model.Validation.Service()
+  validate.structure <- Todo.Structure.Validation.Service()
   
   services <- list()
 
@@ -14,8 +14,8 @@ Todo.Service <- \(broker){
     todos <- broker[['Select']]()
     
     todo |>
-      validate[['Todo']]() |>
-      validate[['IsDuplicate']](todos)
+      validate.structure[['Todo']]() |>
+      validate.structure[['IsDuplicate']](todos)
     
     todo |>
       broker[['Insert']]()
@@ -29,7 +29,7 @@ Todo.Service <- \(broker){
 
   services[["RetrieveById"]] <- \(id) {
     id |>
-      validate[['IdExist']]()
+      validate.structure[['IdExist']]()
 
     id |> 
       broker[['SelectById']]()
@@ -37,7 +37,7 @@ Todo.Service <- \(broker){
 
   services[['Update']] <- \(todo) {
     todo |>
-      validate[['Todo']]()
+      validate.structure[['Todo']]()
     
     todo |>
       broker[['Update']]()
@@ -47,7 +47,7 @@ Todo.Service <- \(broker){
 
   services[['Delete']] <- \(id) {
     id |>
-      validate[['IdExist']]()
+      validate.structure[['IdExist']]()
     
     id |>
       broker[['Delete']]()
