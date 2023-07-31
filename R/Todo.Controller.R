@@ -6,6 +6,7 @@ Todo.Controller <- \(id, data) {
       state <- reactiveValues()
       state[["todos"]] <- data[['Retrieve']]()
       state[["todo"]]  <- NULL
+      
      # Input Binding
       observeEvent(input[['create']], { coordinator[['create']](input[["newTask"]]) })
       observeEvent(input[["todos_rows_selected"]], { coordinator[["select"]](input[["todos_rows_selected"]]) }, ignoreNULL = FALSE )
