@@ -50,7 +50,7 @@ Todo.Controller <- \(id, data) {
         state[["todos"]] <- data[['Retrieve']]()
       }
       coordinator[['delete']] <- \() {
-        state[["todo"]][["Id"]] |> data[['Delete']]()
+        state[["todo"]][["Id"]] |> data[['Remove']]()
         state[["todos"]] <- data[['Retrieve']]()
       }
 

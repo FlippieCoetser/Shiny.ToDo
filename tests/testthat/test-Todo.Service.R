@@ -318,7 +318,7 @@ describe("When todo |> service[['Update']]()",{
     updated.todo |> service[['Update']]() |> expect.error(expected.error)
   })
 })
-describe("When id |> service[['Delete']]()",{
+describe("When id |> service[['Remove']]()",{
   it('then todo is deleted from storage',{
     # Given
     configuration <- data.frame()
@@ -330,7 +330,7 @@ describe("When id |> service[['Delete']]()",{
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
     # When
-    existing.todo[['Id']] |> service[['Delete']]()
+    existing.todo[['Id']] |> service[['Remove']]()
 
     # Then
     existing.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() |> expect.empty()
@@ -348,6 +348,6 @@ describe("When id |> service[['Delete']]()",{
     expected.error <- 'successful validation requires an Id'
 
     # Then
-    id |> service[['Delete']]() |> expect.error(expected.error)
+    id |> service[['Remove']]() |> expect.error(expected.error)
   })
 })

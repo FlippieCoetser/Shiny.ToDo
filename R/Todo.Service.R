@@ -23,11 +23,9 @@ Todo.Service <- \(broker){
 
     return(data.frame())
   }
-
   services[['Retrieve']] <- \(...) {
     ... |> broker[['Select']]()
   }
-
   services[["RetrieveById"]] <- \(id) {
     id |>
       validate.structure[['IdExist']]()
@@ -35,7 +33,6 @@ Todo.Service <- \(broker){
     id |> 
       broker[['SelectById']]()
   }
-
   services[['Update']] <- \(todo) {
     todo |>
       validate.structure[['Todo']]()
@@ -45,8 +42,7 @@ Todo.Service <- \(broker){
 
     return(data.frame())
   }
-
-  services[['Delete']] <- \(id) {
+  services[['Remove']] <- \(id) {
     id |>
       validate.structure[['IdExist']]()
     
