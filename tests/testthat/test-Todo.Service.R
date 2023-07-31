@@ -34,12 +34,12 @@ describe('When services <- Todo.Service()',{
     # Then
     services[['RetrieveById']] |> expect.exist()
   })
-  it('then services contains Update operation',{
+  it('then services contains Modify operation',{
     # Given
     services <- Todo.Service()
 
     # Then
-    services[['Update']] |> expect.exist()
+    services[['Modify']] |> expect.exist()
   })
   it('then services contains Remove operation',{
     # Given
@@ -218,7 +218,7 @@ describe("When id |> service[['RetrieveById']]()",{
     id |> service[['RetrieveById']]() |> expect.error(expected.error)
   })
 })
-describe("When todo |> service[['Update']]()",{
+describe("When todo |> service[['Modify']]()",{
   it('then todo is updated in storage',{
     # Given
     configuration <- data.frame()
@@ -235,7 +235,7 @@ describe("When todo |> service[['Update']]()",{
     expected.todo <- updated.todo
 
     # When
-    updated.todo |> service[['Update']]()
+    updated.todo |> service[['Modify']]()
 
     # Then
     retrieved.todo <- updated.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]()
@@ -261,7 +261,7 @@ describe("When todo |> service[['Update']]()",{
     expected.error <- 'todo data frame has no Id'
 
     # Then
-    updated.todo |> service[['Update']]() |> expect.error(expected.error)
+    updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
   it('then an exception is thrown if todo has no Task',{
     # Given
@@ -280,7 +280,7 @@ describe("When todo |> service[['Update']]()",{
     expected.error <- 'todo data frame has no Task'
 
     # Then
-    updated.todo |> service[['Update']]() |> expect.error(expected.error)
+    updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
   it('then an exception is thrown if todo has no Status',{
     # Given
@@ -299,7 +299,7 @@ describe("When todo |> service[['Update']]()",{
     expected.error <- 'todo data frame has no Status'
 
     # Then
-    updated.todo |> service[['Update']]() |> expect.error(expected.error)
+    updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
   it('then an exception is thrown if todo is null',{
     # Given
@@ -315,7 +315,7 @@ describe("When todo |> service[['Update']]()",{
     expected.error <- 'successful validation requires a data frame with todo'
 
     # Then
-    updated.todo |> service[['Update']]() |> expect.error(expected.error)
+    updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
 })
 describe("When id |> service[['Remove']]()",{

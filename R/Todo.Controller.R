@@ -45,7 +45,7 @@ Todo.Controller <- \(id, data) {
           Id = state[["todo"]][["Id"]],
           Task = input[["task"]],
           Status = input[["status"]]
-        ) |> data[["Update"]]()
+        ) |> data[["Modify"]]()
 
         state[["todos"]] <- data[['Retrieve']]()
       }

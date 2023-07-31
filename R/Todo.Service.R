@@ -33,7 +33,7 @@ Todo.Service <- \(broker){
     id |> 
       broker[['SelectById']]()
   }
-  services[['Update']] <- \(todo) {
+  services[['Modify']] <- \(todo) {
     todo |>
       validate.structure[['Todo']]()
     
