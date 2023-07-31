@@ -1,0 +1,1 @@
+expect.exist      <- \(component) component |> is.null() |> expect_equal(FALSE)
