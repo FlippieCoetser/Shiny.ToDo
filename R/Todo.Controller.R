@@ -2,20 +2,22 @@ Todo.Controller <- \(id, data) {
   moduleServer(
     id,
     \(input, output, session) {
-
+      # Local State
+      state <- reactiveValues()
+      state[["todos"]] <- data[['Retrieve']]()
+      state[["todo"]]  <- NULL
+     # Input Binding
       observeEvent(input[['create']], { coordinator[['create']](input[["newTask"]]) })
       observeEvent(input[["todos_rows_selected"]], { coordinator[["select"]](input[["todos_rows_selected"]]) }, ignoreNULL = FALSE )
       observeEvent(input[["update"]], { coordinator[["update"]]() })
       observeEvent(input[["delete"]], { coordinator[["delete"]]() })
 
-      state <- reactiveValues()
-      state[["todos"]] <- data[['Retrieve']]()
-      state[["todo"]]  <- NULL
-      
+      # Input Validation
       validation <- NULL
       validation[["isTaskEmpty"]] <- reactive(input[["newTask"]] == '')
       validation[["isTodoSelected"]] <- reactive(!is.null(input[["todos_rows_selected"]]))
 
+      # User Actions
       coordinator <- list()
       coordinator[['create']] <- \(task) {
         if (!validation[["isTaskEmpty"]]()) {
@@ -52,6 +54,7 @@ Todo.Controller <- \(id, data) {
         state[["todos"]] <- data[['Retrieve']]()
       }
 
+      # Output Bindings
       output[["todos"]] <- DT::renderDataTable({
         DT::datatable(
           state[["todos"]] |> select(Id, Status, Task),
@@ -70,10 +73,7 @@ Todo.Controller <- \(id, data) {
           )
         )
       })  
-
       output[["isSelectedTodoVisible"]] <- reactive({ is.data.frame(state[["todo"]]) })
-
-      # CONFIGURATION
       outputOptions(output, "isSelectedTodoVisible", suspendWhenHidden = FALSE) 
     }
   )

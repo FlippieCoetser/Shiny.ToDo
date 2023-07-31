@@ -8,5 +8,5 @@ storage       <- configuration |> Storage::Mock.Storage.Service()
 data  <- storage |> Todo.Broker() |> Todo.Service()
 
 shinyServer(\(input, output, session) {
-  Todo.Controller("component", data)
+  Todo.Controller("todo", data)
 })

@@ -1,18 +1,3 @@
-enterOnWidget <- \(widget, event) {
-  tags[['script']](
-    sprintf('
-      $(document).ready(function(){
-        $("#%s").keypress(function(e){
-          if (e.which == 13) {
-            Shiny.onInputChange("%s", Date.now())
-          }
-        })
-      })', 
-      widget, event
-    )
-  )
-}
-
 Todo.View <- \(id) {
   ns <- NS(id)
   tagList(
@@ -28,7 +13,9 @@ Todo.View <- \(id) {
           ns("newTask"),
           ""
         ),
-        enterOnWidget(ns("newTask"),ns("create"))
+        On.Enter.Event(
+          widget = ns("newTask"),
+          trigger = ns("create"))
       )
     ),
     conditionalPanel(
