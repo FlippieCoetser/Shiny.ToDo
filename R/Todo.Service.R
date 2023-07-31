@@ -6,8 +6,8 @@
 #' @usage NULL
 #' @export
 Todo.Service <- \(broker){
-  validate.structure <- Todo.Structure.Validation.Service()
-  validate.logic     <- Todo.Logic.Validation.Service()
+  validate.structure <- Todo.Structure.Validation()
+  validate.logic     <- Todo.Logic.Validation()
   
   services <- list()
 

@@ -1,12 +1,14 @@
-test_that("Todo.Structure.Validation.Service Exist",{
-  Todo.Structure.Validation.Service |>
+
+
+test_that("Todo.Structure.Validation Exist",{
+  Todo.Structure.Validation |>
     is.null() |>
       expect_equal(FALSE)
 })
 
-test_that("Todo.Structure.Validation.Service() returns a list of validators",{
+test_that("Todo.Structure.Validation() returns a list of validators",{
   # Given
-  validators <- Todo.Structure.Validation.Service()
+  validators <- Todo.Structure.Validation()
 
   # Then
   validators |>
@@ -14,9 +16,9 @@ test_that("Todo.Structure.Validation.Service() returns a list of validators",{
       expect_equal(TRUE)
 })
 
-test_that("Todo.Structure.Validation.Service instance has TodoExist validator",{
+test_that("Todo.Structure.Validation instance has TodoExist validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['TodoExist']] |>
@@ -26,7 +28,7 @@ test_that("Todo.Structure.Validation.Service instance has TodoExist validator",{
 
 test_that("todo |> validate[['TodoExist']]() should not throw error if todo exist",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame()
 
@@ -38,7 +40,7 @@ test_that("todo |> validate[['TodoExist']]() should not throw error if todo exis
 
 test_that("todo |> validate[['TodoExist']]() should throw error if todo is null",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- NULL
   error <- "successful validation requires a data frame with todo"
@@ -49,9 +51,9 @@ test_that("todo |> validate[['TodoExist']]() should throw error if todo is null"
       expect_error(error)
 })
 
-test_that("Todo.Structure.Validation.Service instance has HasId validator",{
+test_that("Todo.Structure.Validation instance has HasId validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['HasId']] |>
@@ -61,7 +63,7 @@ test_that("Todo.Structure.Validation.Service instance has HasId validator",{
 
 test_that("todo |> validate[['HasId']]() should not throw error if todo has Id exist",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Id = 'Id'
@@ -75,7 +77,7 @@ test_that("todo |> validate[['HasId']]() should not throw error if todo has Id e
 
 test_that("todo |> validate[['HasId']]() should throw error if todo has no Id",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame()
   error <- "todo data frame has no Id"
@@ -86,9 +88,9 @@ test_that("todo |> validate[['HasId']]() should throw error if todo has no Id",{
       expect_error(error)
 })
 
-test_that("Todo.Structure.Validation.Service instance has TodoTask validator",{
+test_that("Todo.Structure.Validation instance has TodoTask validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['HasTask']] |>
@@ -98,7 +100,7 @@ test_that("Todo.Structure.Validation.Service instance has TodoTask validator",{
 
 test_that("todo |> validate[['HasTask']]() should not throw error if todo has Task exist",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Task = 'Task'
@@ -112,7 +114,7 @@ test_that("todo |> validate[['HasTask']]() should not throw error if todo has Ta
 
 test_that("todo |> validate[['HasTask']]() should throw error if todo has no Task",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame()
   error <- "todo data frame has no Task"
@@ -123,9 +125,9 @@ test_that("todo |> validate[['HasTask']]() should throw error if todo has no Tas
       expect_error(error)
 })
 
-test_that("Todo.Structure.Validation.Service instance has HasStatus validator",{
+test_that("Todo.Structure.Validation instance has HasStatus validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['HasStatus']] |>
@@ -135,7 +137,7 @@ test_that("Todo.Structure.Validation.Service instance has HasStatus validator",{
 
 test_that("todo |> validate[['HasStatus']]() should not throw error if todo has Status exist",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Status = 'Status'
@@ -149,7 +151,7 @@ test_that("todo |> validate[['HasStatus']]() should not throw error if todo has 
 
 test_that("todo |> validate[['HasStatus']]() should throw error if todo has no Status",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame()
   error <- "todo data frame has no Status"
@@ -160,9 +162,9 @@ test_that("todo |> validate[['HasStatus']]() should throw error if todo has no S
       expect_error(error)
 })
 
-test_that("Todo.Structure.Validation.Service instance has Todo validator",{
+test_that("Todo.Structure.Validation instance has Todo validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['Todo']] |>
@@ -172,7 +174,7 @@ test_that("Todo.Structure.Validation.Service instance has Todo validator",{
 
 test_that("todo |> validate[['Todo']]() should not throw error if todo is valid",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Id     = 'Id',
@@ -188,7 +190,7 @@ test_that("todo |> validate[['Todo']]() should not throw error if todo is valid"
 
 test_that("Todo |> validate[['Todo']]() should throw error if todo is null",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- NULL
   error <- "successful validation requires a data frame with todo"
@@ -201,7 +203,7 @@ test_that("Todo |> validate[['Todo']]() should throw error if todo is null",{
 
 test_that("Todo |> validate[['Todo']]() should throw error if todo has no Id",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame()
   error <- "todo data frame has no Id"
@@ -214,7 +216,7 @@ test_that("Todo |> validate[['Todo']]() should throw error if todo has no Id",{
 
 test_that("Todo |> validate[['Todo']]() should throw error if todo has no Task",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Id = 'Id'
@@ -229,7 +231,7 @@ test_that("Todo |> validate[['Todo']]() should throw error if todo has no Task",
 
 test_that("todo |> validate[['Todo']]() should throw error if todo has no Status",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   todo  <- data.frame(
     Id     = 'Id',
@@ -243,9 +245,9 @@ test_that("todo |> validate[['Todo']]() should throw error if todo has no Status
       expect_error(error)
 })
 
-test_that("Todo.Structure.Validation.Service instance has IdExist validator",{
+test_that("Todo.Structure.Validation instance has IdExist validator",{
   # Given
-  validator <- Todo.Structure.Validation.Service()
+  validator <- Todo.Structure.Validation()
 
   # Then
   validator[['IdExist']] |>
@@ -255,7 +257,7 @@ test_that("Todo.Structure.Validation.Service instance has IdExist validator",{
 
 test_that("id |> validate[['IdExist']]() should not throw error if id exist",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   id  <- uuid::UUIDgenerate()
 
@@ -267,7 +269,7 @@ test_that("id |> validate[['IdExist']]() should not throw error if id exist",{
 
 test_that("id |> validate[['IdExist']]() should throw error if id is null",{
   # Given
-  validate <- Todo.Structure.Validation.Service()
+  validate <- Todo.Structure.Validation()
 
   id  <- NULL
   error <- "successful validation requires an Id"

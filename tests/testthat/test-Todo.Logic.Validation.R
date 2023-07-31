@@ -1,21 +1,21 @@
-describe('Given Todo.Logic.Validation.Service',{
+describe('Given Todo.Logic.Validation',{
   it('exist',{
     # Given
-    Todo.Logic.Validation.Service |> expect.exist()
+    Todo.Logic.Validation |> expect.exist()
   })
 })
 
-describe('When validators <- Todo.Logic.Validation.Service()',{
+describe('When validators <- Todo.Logic.Validation()',{
   it('then operations is a list',{
     # Given
-    validators <- Todo.Logic.Validation.Service()
+    validators <- Todo.Logic.Validation()
 
     # Then
     validators |> expect.list()
   })
   it('then operations has IsDuplicate',{
     # Given
-    validators <- Todo.Logic.Validation.Service()
+    validators <- Todo.Logic.Validation()
 
     # Then
     validators[["IsDuplicate"]] |> expect.exist()
@@ -25,7 +25,7 @@ describe('When validators <- Todo.Logic.Validation.Service()',{
 describe("When todo |> validate[['IsDuplicate']]()",{
   it('then no exception is thrown if todo does not exist in todos',{
     # Given
-    validate <- Todo.Logic.Validation.Service()
+    validate <- Todo.Logic.Validation()
 
     todos <- data.frame(
       Id     = c('7ab3df6f-2e8f-44b4-87bf-3004cf1c16ae',
@@ -42,7 +42,7 @@ describe("When todo |> validate[['IsDuplicate']]()",{
   })
   it('then an exception is thrown if todo does exist in todos',{
     # Given
-    validate <- Todo.Logic.Validation.Service()
+    validate <- Todo.Logic.Validation()
 
     todos <- data.frame(
       Id     = c('7ab3df6f-2e8f-44b4-87bf-3004cf1c16ae',

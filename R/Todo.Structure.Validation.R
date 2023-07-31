@@ -1,4 +1,4 @@
-Todo.Structure.Validation.Service <- \(){
+Todo.Structure.Validation <- \(){
   exception <- Todo.Exceptions()
   
   validators <- list()
