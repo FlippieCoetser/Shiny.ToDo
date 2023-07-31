@@ -41,12 +41,12 @@ describe('When services <- Todo.Service()',{
     # Then
     services[['Update']] |> expect.exist()
   })
-  it('then services contains Delete operation',{
+  it('then services contains Remove operation',{
     # Given
     services <- Todo.Service()
 
     # Then
-    services[['Delete']] |> expect.exist()
+    services[['Remove']] |> expect.exist()
   })
 })
 
