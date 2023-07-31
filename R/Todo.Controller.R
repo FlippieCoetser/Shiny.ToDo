@@ -12,15 +12,15 @@ Todo.Controller <- \(id, data) {
       observeEvent(input[["update"]], { coordinator[["update"]]() })
       observeEvent(input[["delete"]], { coordinator[["delete"]]() })
 
-      # Input Validation
-      validation <- NULL
-      validation[["isTaskEmpty"]] <- reactive(input[["newTask"]] == '')
-      validation[["isTodoSelected"]] <- reactive(!is.null(input[["todos_rows_selected"]]))
+      # Input Verification
+      verification <- NULL
+      verification[["isTaskEmpty"]] <- reactive(input[["newTask"]] == '')
+      verification[["isTodoSelected"]] <- reactive(!is.null(input[["todos_rows_selected"]]))
 
       # User Actions
       coordinator <- list()
       coordinator[['create']] <- \(task) {
-        if (!validation[["isTaskEmpty"]]()) {
+        if (!verification[["isTaskEmpty"]]()) {
           # Use the data layer to create a new todo
           task |> Todo.Model() |> data[['Add']]()
           # Use the data layer to update local state
@@ -30,7 +30,7 @@ Todo.Controller <- \(id, data) {
         }
       }
       coordinator[['select']] <- \(id) {
-        if (validation[["isTodoSelected"]]()) {
+        if (verification[["isTodoSelected"]]()) {
           state[["todo"]] <- state[["todos"]][id,]
 
           session |> updateTextInput("task", value = state[["todo"]][["Task"]])
@@ -41,12 +41,11 @@ Todo.Controller <- \(id, data) {
         }
       }
       coordinator[['update']] <- \() {
-        data.frame(
-          Id = state[["todo"]][["Id"]],
-          Task = input[["task"]],
-          Status = input[["status"]]
-        ) |> data[["Modify"]]()
+        state[['todo']][["Task"]] <- input[["task"]]
+        state[['todo']][["Status"]] <- input[["status"]]
 
+        state[['todo']] |> data[["Modify"]]()
+ 
         state[["todos"]] <- data[['Retrieve']]()
       }
       coordinator[['delete']] <- \() {
