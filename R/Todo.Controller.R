@@ -29,8 +29,7 @@ Todo.Controller <- \(id, data) {
       }
       controller[['select']] <- \() {
         if (verify[["todoSelected"]]()) {
-          id <- input[["todos_rows_selected"]]
-          state[["todo"]] <- state[["todos"]][id,]
+          state[["todo"]] <- state[["todos"]][input[["todos_rows_selected"]],]
 
           session |> updateTextInput("task", value = state[["todo"]][["Task"]])
           session |> updateTextInput("status", value = state[["todo"]][["Status"]])
@@ -40,7 +39,7 @@ Todo.Controller <- \(id, data) {
         }
       }
       controller[['update']] <- \() {
-        state[['todo']][["Task"]] <- input[["task"]]
+        state[['todo']][["Task"]]   <- input[["task"]]
         state[['todo']][["Status"]] <- input[["status"]]
 
         state[["todos"]] <- state[['todo']] |> data[["Update"]]()
