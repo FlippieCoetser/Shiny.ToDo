@@ -123,3 +123,22 @@ describe("when todo |> process[['Upsert']]()",{
     retrieved.todo[['Status']] |> expect_equal(expected.todo[['Status']])
   })
 })
+
+describe("then id |> process[['Remove']]()",{
+  it("then todo is removed from todos",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    # When
+    existing.todo[['Id']] |> process[['Remove']]()
+
+    # Then
+    existing.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() |> expect.empty()
+  })
+})
