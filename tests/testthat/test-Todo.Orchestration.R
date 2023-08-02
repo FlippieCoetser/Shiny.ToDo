@@ -90,6 +90,26 @@ describe('When todo |> orchestrate[["Add"]]()',{
   })
 })
 
+describe('When orchestrate[["Retrieve"]]()',{
+  it('then a data.frame with todos is returned',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    orchestrate <- storage |> Todo.Orchestration()
+
+    actual.todos   <- storage[['Todo']][['Select']]()
+    expected.todos <- actual.todos
+
+    # When
+    retrieved.todos <- orchestrate[['Retrieve']]()
+
+    # Then
+    retrieved.todos |> expect.equal(expected.todos)
+  })
+})
+
 describe("When todo |> orchestrate[['Update']]()",{
   it("then a data.frame with todos containing update todo is returned",{
     # Given
