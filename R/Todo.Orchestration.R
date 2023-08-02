@@ -7,6 +7,11 @@ Todo.Orchestration <- \(storage) {
     todos <- service[['Retrieve']]()
     return(todos)
   }
-  orchestrations[['Update']] <- \() {}
+  orchestrations[['Update']] <- \(todo) {
+    todo |> service[['Modify']]()
+
+    todos <- service[['Retrieve']]()
+    return(todos)
+  }
   return(orchestrations)
 }
