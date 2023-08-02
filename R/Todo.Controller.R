@@ -22,7 +22,7 @@ Todo.Controller <- \(id, data) {
       controller <- list()
       controller[['create']] <- \() {
         if (!verify[["taskEmpty"]]()) {
-          state[["todos"]] <- input[["newTask"]] |> Todo.Model() |> data[['Add']]()
+          state[["todos"]] <- input[["newTask"]] |> Todo.Model() |> data[['UpsertRetrieve']]()
           # Clear the input
           session |> updateTextInput("task", value = '')
         }
@@ -42,10 +42,10 @@ Todo.Controller <- \(id, data) {
         state[['todo']][["Task"]]   <- input[["task"]]
         state[['todo']][["Status"]] <- input[["status"]]
 
-        state[["todos"]] <- state[['todo']] |> data[["Update"]]()
+        state[["todos"]] <- state[['todo']] |> data[["UpsertRetrieve"]]()
       }
       controller[['delete']] <- \() {
-        state[["todos"]] <- state[["todo"]][["Id"]] |> data[['Delete']]()
+        state[["todos"]] <- state[["todo"]][["Id"]] |> data[['DeleteRetrieve']]()
       }
 
       # Output Bindings
