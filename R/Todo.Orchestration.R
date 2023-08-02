@@ -15,12 +15,6 @@ Todo.Orchestration <- \(storage) {
     todos <- process[['Retrieve']]()
     return(todos)
   }
-  orchestrations[['Update']]         <- \(todo) {
-    todo |> process[['Upsert']]()
-
-    todos <- process[['Retrieve']]()
-    return(todos)
-  }
   orchestrations[['DeleteRetrieve']] <- \(id) {
     id |> process[['Remove']]()
 
