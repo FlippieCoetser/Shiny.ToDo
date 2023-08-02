@@ -63,3 +63,26 @@ describe("when process[['Retrieve']]()",{
     retrieved.todos |> expect.equal(expected.todos)
   })
 })
+
+describe("when todo |> process[['Upsert']]()",{
+  it("then todo is added to todos if not exist",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
+
+    random.todo   <- 'Task' |> Todo.Model()
+    new.todo      <- random.todo 
+
+    expected.todo <- new.todo
+    
+    # When
+    new.todo |> process[['Upsert']]()
+
+    # Then
+    retrieved.todos <- storage[['Todo']][['Select']]()
+    retrieved.todos |> expect.contain(expected.todo)
+  })
+})
