@@ -12,5 +12,6 @@ Todo.Processing <- \(service) {
       todo |> service[['Add']]()
     }
   }
+  processors[['Remove']] <- \() {}
   return(processors)
 }
