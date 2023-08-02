@@ -42,6 +42,18 @@ describe('When processors <- storage |> Todo.Processing()',{
     # Then
     processors[['Upsert']] |> expect.exist()
   })
+  it('then processors contains Remove processor',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
+
+    # Then
+    processors[['Remove']] |> expect.exist()
+  })
 })
 
 describe("when process[['Retrieve']]()",{
