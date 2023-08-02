@@ -96,7 +96,7 @@ describe("When todo |> orchestrate[['Update']]()",{
 
     # When
     retrieved.todos <- updated.todo |> orchestrate[['Update']]()
-    retrieved.todo <- retrieved.todos |> filter(Id == updated.todo[['Id']])
+    retrieved.todo  <- retrieved.todos[retrieved.todos[['Id']] == updated.todo[['Id']],] 
 
     # Then
     retrieved.todos |> expect.contain(expected.todo)
@@ -104,5 +104,25 @@ describe("When todo |> orchestrate[['Update']]()",{
     retrieved.todo[['Id']]     |> expect.equal(expected.todo[['Id']])
     retrieved.todo[['Task']]   |> expect.equal(expected.todo[['Task']])
     retrieved.todo[['Status']] |> expect.equal(expected.todo[['Status']])
+  })
+})
+
+describe("When id |> orchestrate[['Delete']]()",{
+  it("then a data.frame with todos excluding todo with id is returned",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    orchestrate <- storage |> Todo.Orchestration()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    existing.id <- existing.todo[['Id']]
+
+    # When 
+    retrieved.todos <- existing.id |> orchestrate[['Delete']]()
+
+    # Then
+    retrieved.todos |> expect.not.contain(existing.todo)
   })
 })
