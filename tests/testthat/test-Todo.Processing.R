@@ -85,4 +85,29 @@ describe("when todo |> process[['Upsert']]()",{
     retrieved.todos <- storage[['Todo']][['Select']]()
     retrieved.todos |> expect.contain(expected.todo)
   })
+  it("then todo is updated if exist",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    updated.todo  <- existing.todo
+    updated.todo[['Task']] <- 'Updated Task'
+
+    expected.todo <- updated.todo
+
+    # When
+    updated.todo |> process[['Upsert']]()
+
+    # Then
+    retrieved.todo <- updated.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]()
+
+    retrieved.todo[['Id']]     |> expect_equal(expected.todo[['Id']])
+    retrieved.todo[['Task']]   |> expect_equal(expected.todo[['Task']])
+    retrieved.todo[['Status']] |> expect_equal(expected.todo[['Status']])
+  })
 })
