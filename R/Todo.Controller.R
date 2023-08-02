@@ -51,7 +51,7 @@ Todo.Controller <- \(id, data) {
       # Output Bindings
       output[["todos"]] <- DT::renderDataTable({
         DT::datatable(
-          state[["todos"]] |> select(Id, Status, Task),
+          state[["todos"]],
           selection = 'single',
           rownames = FALSE,
           colnames = c("", ""),
