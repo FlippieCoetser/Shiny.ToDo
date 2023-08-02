@@ -65,3 +65,32 @@ describe('When todo |> orchestrate[["Add"]]()',{
     retrieved.todos |> expect.contain(expected.todo)
   })
 })
+
+describe("When todo |> orchestrate[['Update']]()",{
+  it("then a data.frame with todos containing update todo is returned",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    orchestrate <- storage |> Todo.Orchestration()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    updated.todo  <- existing.todo
+    updated.todo[['Task']] <- 'Updated Task'
+    
+    expected.todo <- updated.todo
+
+    # When
+    retrieved.todos <- updated.todo |> orchestrate[['Update']]()
+    retrieved.todo <- retrieved.todos |> filter(Id == updated.todo[['Id']])
+
+    # Then
+    retrieved.todos |> expect.contain(expected.todo)
+
+    retrieved.todo[['Id']]     |> expect.equal(expected.todo[['Id']])
+    retrieved.todo[['Task']]   |> expect.equal(expected.todo[['Task']])
+    retrieved.todo[['Status']] |> expect.equal(expected.todo[['Status']])
+  })
+})
