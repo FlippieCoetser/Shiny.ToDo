@@ -22,10 +22,7 @@ Todo.Controller <- \(id, data) {
       controller <- list()
       controller[['create']] <- \() {
         if (!verify[["taskEmpty"]]()) {
-          # Use the data layer to create a new todo
-          input[["newTask"]] |> Todo.Model() |> data[['Add']]()
-          # Use the data layer to update local state
-          state[["todos"]] <- data[['Retrieve']]()
+          state[["todos"]] <- input[["newTask"]] |> Todo.Model() |> data[['Add']]()
           # Clear the input
           session |> updateTextInput("task", value = '')
         }
@@ -46,13 +43,10 @@ Todo.Controller <- \(id, data) {
         state[['todo']][["Task"]] <- input[["task"]]
         state[['todo']][["Status"]] <- input[["status"]]
 
-        state[['todo']] |> data[["Modify"]]()
- 
-        state[["todos"]] <- data[['Retrieve']]()
+        state[["todos"]] <- state[['todo']] |> data[["Update"]]()
       }
       controller[['delete']] <- \() {
-        state[["todo"]][["Id"]] |> data[['Remove']]()
-        state[["todos"]] <- data[['Retrieve']]()
+        state[["todos"]] <- state[["todo"]][["Id"]] |> data[['Delete']]()
       }
 
       # Output Bindings
