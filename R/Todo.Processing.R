@@ -4,7 +4,13 @@ Todo.Processing <- \(service) {
     service[['Retrieve']]()
   }
   processors[['Upsert']] <- \(todo) {
-    todo |> service[['Add']]()
+    exist <- todo[['Id']] |> service[['RetrieveById']]() |> nrow() > 0
+
+    if(exist) {
+      todo |> service[['Modify']]()
+    } else {
+      todo |> service[['Add']]()
+    }
   }
   return(processors)
 }
