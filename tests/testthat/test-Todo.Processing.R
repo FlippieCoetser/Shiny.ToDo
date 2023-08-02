@@ -30,6 +30,18 @@ describe('When processors <- storage |> Todo.Processing()',{
     # Then
     processors[['Retrieve']] |> expect.exist()
   })
+  it('then processors contains Upsert processor',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
+
+    # Then
+    processors[['Upsert']] |> expect.exist()
+  })
 })
 
 describe("when process[['Retrieve']]()",{
