@@ -3,5 +3,6 @@ Todo.Processing <- \(service) {
   processors[['Retrieve']] <- \() {
     service[['Retrieve']]()
   }
+  processors[['Upsert']] <- \() {}
   return(processors)
 }
