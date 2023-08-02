@@ -8,10 +8,10 @@ Todo.Controller <- \(id, data) {
       state[["todo"]]  <- NULL
 
       # Input Binding
-      observeEvent(input[['create']], { coordinator[['create']]() })
-      observeEvent(input[["todos_rows_selected"]], { coordinator[["select"]]() }, ignoreNULL = FALSE )
-      observeEvent(input[["update"]], { coordinator[["update"]]() })
-      observeEvent(input[["delete"]], { coordinator[["delete"]]() })
+      observeEvent(input[['create']], { controller[['create']]() })
+      observeEvent(input[["todos_rows_selected"]], { controller[["select"]]() }, ignoreNULL = FALSE )
+      observeEvent(input[["update"]], { controller[["update"]]() })
+      observeEvent(input[["delete"]], { controller[["delete"]]() })
 
       # Input Verification
       verify <- list()
@@ -19,8 +19,8 @@ Todo.Controller <- \(id, data) {
       verify[["todoSelected"]] <- reactive(!is.null(input[["todos_rows_selected"]]))
 
       # User Actions
-      coordinator <- list()
-      coordinator[['create']] <- \() {
+      controller <- list()
+      controller[['create']] <- \() {
         if (!verify[["taskEmpty"]]()) {
           # Use the data layer to create a new todo
           input[["newTask"]] |> Todo.Model() |> data[['Add']]()
@@ -30,7 +30,7 @@ Todo.Controller <- \(id, data) {
           session |> updateTextInput("task", value = '')
         }
       }
-      coordinator[['select']] <- \() {
+      controller[['select']] <- \() {
         if (verify[["todoSelected"]]()) {
           id <- input[["todos_rows_selected"]]
           state[["todo"]] <- state[["todos"]][id,]
@@ -42,7 +42,7 @@ Todo.Controller <- \(id, data) {
           state[["todo"]] <- NULL
         }
       }
-      coordinator[['update']] <- \() {
+      controller[['update']] <- \() {
         state[['todo']][["Task"]] <- input[["task"]]
         state[['todo']][["Status"]] <- input[["status"]]
 
@@ -50,7 +50,7 @@ Todo.Controller <- \(id, data) {
  
         state[["todos"]] <- data[['Retrieve']]()
       }
-      coordinator[['delete']] <- \() {
+      controller[['delete']] <- \() {
         state[["todo"]][["Id"]] |> data[['Remove']]()
         state[["todos"]] <- data[['Retrieve']]()
       }
