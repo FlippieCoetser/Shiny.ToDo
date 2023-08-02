@@ -18,7 +18,7 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     # Then
     orchestrations |> expect.list()
   })
-  it('then orchestrations is a list',{
+  it('then orchestrations contain Add orchestration',{
     # Given
     configuration <- data.frame()
 
@@ -28,7 +28,7 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations <- storage |> Todo.Orchestration()
 
     # Then
-    orchestrations |> expect.list()
+    orchestrations[['Add']] |> expect.exist()
   })
 })
 
