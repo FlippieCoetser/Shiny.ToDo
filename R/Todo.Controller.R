@@ -22,18 +22,14 @@ Todo.Controller <- \(id, data) {
       controller <- list()
       controller[['create']] <- \() {
         if (!verify[["taskEmpty"]]()) {
-          # Use the data layer to create a new todo
-          input[["newTask"]] |> Todo.Model() |> data[['Add']]()
-          # Use the data layer to update local state
-          state[["todos"]] <- data[['Retrieve']]()
+          state[["todos"]] <- input[["newTask"]] |> Todo.Model() |> data[['Add']]()
           # Clear the input
           session |> updateTextInput("task", value = '')
         }
       }
       controller[['select']] <- \() {
         if (verify[["todoSelected"]]()) {
-          id <- input[["todos_rows_selected"]]
-          state[["todo"]] <- state[["todos"]][id,]
+          state[["todo"]] <- state[["todos"]][input[["todos_rows_selected"]],]
 
           session |> updateTextInput("task", value = state[["todo"]][["Task"]])
           session |> updateTextInput("status", value = state[["todo"]][["Status"]])
@@ -43,16 +39,13 @@ Todo.Controller <- \(id, data) {
         }
       }
       controller[['update']] <- \() {
-        state[['todo']][["Task"]] <- input[["task"]]
+        state[['todo']][["Task"]]   <- input[["task"]]
         state[['todo']][["Status"]] <- input[["status"]]
 
-        state[['todo']] |> data[["Modify"]]()
- 
-        state[["todos"]] <- data[['Retrieve']]()
+        state[["todos"]] <- state[['todo']] |> data[["Update"]]()
       }
       controller[['delete']] <- \() {
-        state[["todo"]][["Id"]] |> data[['Remove']]()
-        state[["todos"]] <- data[['Retrieve']]()
+        state[["todos"]] <- state[["todo"]][["Id"]] |> data[['Delete']]()
       }
 
       # Output Bindings
