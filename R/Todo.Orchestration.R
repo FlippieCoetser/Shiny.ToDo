@@ -13,5 +13,8 @@ Todo.Orchestration <- \(storage) {
     todos <- service[['Retrieve']]()
     return(todos)
   }
+  orchestrations[['Delete']] <- \(id) {
+    
+  }
   return(orchestrations)
 }
