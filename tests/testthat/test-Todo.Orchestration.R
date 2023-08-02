@@ -18,7 +18,7 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     # Then
     orchestrations |> expect.list()
   })
-  it('then orchestrations contain Add orchestration',{
+  it('then orchestrations contain UpsertRetrieve orchestration',{
     # Given
     configuration <- data.frame()
 
@@ -28,7 +28,7 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations <- storage |> Todo.Orchestration()
 
     # Then
-    orchestrations[['Add']] |> expect.exist()
+    orchestrations[['UpsertRetrieve']] |> expect.exist()
   })
   it('then orchestrations contain Retrieve orchestration',{
     # Given
@@ -54,7 +54,7 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     # Then
     orchestrations[['Update']] |> expect.exist()
   })
-  it('then orchestrations contain Delete orchestration',{
+  it('then orchestrations contain DeleteRetrieve orchestration',{
     # Given
     configuration <- data.frame()
 
@@ -64,12 +64,12 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations <- storage |> Todo.Orchestration()
 
     # Then
-    orchestrations[['Delete']] |> expect.exist()
+    orchestrations[['DeleteRetrieve']] |> expect.exist()
   })
 })
 
-describe('When todo |> orchestrate[["Add"]]()',{
-  it('then a data.frame with todos containing todo is returned',{
+describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
+  it('then a data.frame with todos containing new todo is returned',{
     # Given
     configuration <- data.frame()
 
@@ -83,10 +83,36 @@ describe('When todo |> orchestrate[["Add"]]()',{
     expected.todo <- new.todo 
 
     # When
-    retrieved.todos <- new.todo |> orchestrate[["Add"]]()
+    retrieved.todos <- new.todo |> orchestrate[["UpsertRetrieve"]]()
 
     # Then
     retrieved.todos |> expect.contain(expected.todo)
+  })
+  it("then a data.frame with todos containing update todo is returned",{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    orchestrate <- storage |> Todo.Orchestration()
+
+    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+
+    updated.todo  <- existing.todo
+    updated.todo[['Task']] <- 'Updated Task'
+    
+    expected.todo <- updated.todo
+
+    # When
+    retrieved.todos <- updated.todo |> orchestrate[['UpsertRetrieve']]()
+    retrieved.todo  <- retrieved.todos[retrieved.todos[['Id']] == updated.todo[['Id']],] 
+
+    # Then
+    retrieved.todos |> expect.contain(expected.todo)
+
+    retrieved.todo[['Id']]     |> expect.equal(expected.todo[['Id']])
+    retrieved.todo[['Task']]   |> expect.equal(expected.todo[['Task']])
+    retrieved.todo[['Status']] |> expect.equal(expected.todo[['Status']])
   })
 })
 
@@ -139,7 +165,7 @@ describe("When todo |> orchestrate[['Update']]()",{
   })
 })
 
-describe("When id |> orchestrate[['Delete']]()",{
+describe("When id |> orchestrate[['DeleteRetrieve']]()",{
   it("then a data.frame with todos excluding todo with id is returned",{
     # Given
     configuration <- data.frame()
@@ -152,7 +178,7 @@ describe("When id |> orchestrate[['Delete']]()",{
     existing.id <- existing.todo[['Id']]
 
     # When 
-    retrieved.todos <- existing.id |> orchestrate[['Delete']]()
+    retrieved.todos <- existing.id |> orchestrate[['DeleteRetrieve']]()
 
     # Then
     retrieved.todos |> expect.not.contain(existing.todo)
