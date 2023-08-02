@@ -1,26 +1,24 @@
 Todo.Orchestration <- \(storage) {
-  service <- storage |> Todo.Broker() |> Todo.Service()
+  process <- storage |> 
+    Todo.Broker()    |> 
+    Todo.Service()   |> 
+    Todo.Processing()
+
   orchestrations <- list()
-  orchestrations[['Add']]      <- \(todo) {
-    todo |> service[['Add']]()
+  orchestrations[['UpsertRetrieve']] <- \(todo) {
+    todo |> process[['Upsert']]()
 
-    todos <- service[['Retrieve']]()
+    todos <- process[['Retrieve']]()
     return(todos)
   }
-  orchestrations[['Retrieve']] <- \() {
-    todos <- service[['Retrieve']]()
+  orchestrations[['Retrieve']]       <- \() {
+    todos <- process[['Retrieve']]()
     return(todos)
   }
-  orchestrations[['Update']]   <- \(todo) {
-    todo |> service[['Modify']]()
+  orchestrations[['DeleteRetrieve']] <- \(id) {
+    id |> process[['Remove']]()
 
-    todos <- service[['Retrieve']]()
-    return(todos)
-  }
-  orchestrations[['Delete']]   <- \(id) {
-    id |> service[['Remove']]()
-
-    todos <- service[['Retrieve']]()
+    todos <- process[['Retrieve']]()
     return(todos)
   }
   return(orchestrations)
