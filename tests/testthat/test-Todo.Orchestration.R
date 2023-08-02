@@ -30,6 +30,18 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     # Then
     orchestrations[['Add']] |> expect.exist()
   })
+  it('then orchestrations contain Retrieve orchestration',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    orchestrations <- storage |> Todo.Orchestration()
+
+    # Then
+    orchestrations[['Retrieve']] |> expect.exist()
+  })
   it('then orchestrations contain Update orchestration',{
     # Given
     configuration <- data.frame()
