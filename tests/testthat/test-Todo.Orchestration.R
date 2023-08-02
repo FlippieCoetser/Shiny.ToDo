@@ -42,6 +42,18 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     # Then
     orchestrations[['Update']] |> expect.exist()
   })
+  it('then orchestrations contain Delete orchestration',{
+    # Given
+    configuration <- data.frame()
+
+    storage <- configuration |> Storage::Mock.Storage.Service()
+
+    # When
+    orchestrations <- storage |> Todo.Orchestration()
+
+    # Then
+    orchestrations[['Delete']] |> expect.exist()
+  })
 })
 
 describe('When todo |> orchestrate[["Add"]]()',{
