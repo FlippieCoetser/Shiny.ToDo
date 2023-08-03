@@ -1,9 +1,3 @@
-#' Todo Broker
-#' 
-#' @description
-#'  This is the broker which contains primary operations for the Todo Model.
-#'
-#' @usage NULL
 Todo.Broker <- \(storage){
   operations <- list()
 

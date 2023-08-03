@@ -1,3 +1,10 @@
+#' Todo Orchestration service
+#' 
+#' @description
+#'  This is the service is the primary access point of the data access layer.
+#'
+#' @usage NULL
+#' @export
 Todo.Orchestration <- \(storage) {
   process <- storage |> 
     Todo.Broker()    |> 

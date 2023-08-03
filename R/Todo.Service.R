@@ -1,10 +1,3 @@
-#' Todo Server
-#' 
-#' @description
-#'  This is the service which contains primary operations for the Todo Model and includes validation.
-#'
-#' @usage NULL
-#' @export
 Todo.Service <- \(broker){
   validate.structure <- Todo.Structure.Validation()
   validate.logic     <- Todo.Logic.Validation()
