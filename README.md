@@ -83,7 +83,7 @@ runApp()
 
 In textbooks focusing on software architecture, it is typical to see a software application segmented into three layers: `User Interface`, `Business Logic`, and `Data`.
 
-![Enterprise Application Hierarchy](/ToDo.Module.PNG)
+![Architecture](/ToDo.Module.png)
 
 Although this is not the only way to design software architecture, it aligns well with this ToDo sample application.
 
