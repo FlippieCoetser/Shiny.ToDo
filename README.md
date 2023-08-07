@@ -31,7 +31,7 @@ install.packages("stringr")
 install.packages("shiny")
 install.packages("shinydashboard")
 install.packages("DT")
-install.packages("shinytest2)
+install.packages("shinytest2")
 install.packages("uuid")
 ```
 
@@ -77,11 +77,14 @@ runApp()
 
 ![Enterprise Application Hierarchy](/ToDo.PNG)
 
-## Shiny Software Arhitecture
+## Shiny Software Architecture
 
 ### Functional Decomposition
 
 In textbooks focusing on software architecture, it is typical to see a software application segmented into three layers: `User Interface`, `Business Logic`, and `Data`.
+
+![Enterprise Application Hierarchy](/ToDo.Module.PNG)
+
 Although this is not the only way to design software architecture, it aligns well with this ToDo sample application.
 
 Before we dive into the details of each layer, it is important to understand just like `vue.js` and `react` in Javascript or `Blazor` in C#, R has the `Shiny` application framework. Shiny is an open-source framework made available as an R package that allows users to build interactive web applications directly from R. Shiny is intended to simplify the process of producing web-friendly, interactive data visualizations and makes it easier for R users who might not necessarily have the expertise in web development languages like HTML, CSS, and Javascript.
