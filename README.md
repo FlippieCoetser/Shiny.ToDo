@@ -22,7 +22,7 @@ Whether your development environment is based on RStudio or VS Code the installa
 install.packages("devtools")
 ```
 
-I you have difficulty please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions.
+If you have difficulty, please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions.
 
 2. Install the application dependencies:
 
@@ -114,7 +114,7 @@ dashboardPage(
 )
 ```
 
-From a layout perspective, you can see we have a `dashboardPage` which contains `header`, `sidebar` and `body` widgets. For simplicity the `header` and `sidebar` elements are disabled. The `body` element contains a custom shiny widget: `Todo.View`. Using custom shiny widgets allows us to build modular UI components which increase reusability and scalability.
+From a layout perspective, you can see we have a `dashboardPage` which contains `header`, `sidebar` and `body` widgets. For simplicity, the `header` and `sidebar` elements are disabled. The `body` element contains a custom shiny widget: `Todo.View`. Using custom shiny widgets allows us to build modular UI components, which increase reusability and scalability.
 
 <details>
   <summary>Custom Shiny UI Widget</summary>
@@ -277,7 +277,7 @@ Todo.Controller <- \(id, data) {
 }
 ```
 
-The `Todo.Controller` is a `reactive` function which takes two arguments: `id` and `data`. The `id` is used to identify the custom shiny widget and the `data` is used to inject the data access layer into the business logic. We will look at the data access layer in the next section. Key elements in the `Todo.Controller` are:
+The `Todo.Controller` is a `reactive` function which takes two arguments: `id` and `data`. The `id` is used to identify the custom shiny widget, and the `data` is used to inject the data access layer into the business logic. We will look at the data access layer in the next section. Key elements in the `Todo.Controller` are:
 
 1. Input Events: `observeEvent`
 2. Input Validation: `reactive`
@@ -288,7 +288,7 @@ Many more Reactive programming functions are available as part of the Shiny fram
 
 </details>
 
-- The `Data (Data)` layer is responsible for `creating`, `retrieving`, `updating` and `deleting` data contained in long-term storage. Most applications build with Shiny are for interactive reports and dashboards. Meaning data is only ingested from storage. However, when developing enterprise-level applications being able to create, retrieve, update or delete data in storage is a very common practice. Unfortunately, unlike `Entity Framework` in C#, R has no available framework to build `Data Layers`. Typically a data access Layer includes features which translate R code to, for example, SQL statements. Input, Output and Structural Validation and Exception handling are also included. Injecting the data access layer into a Shiny application is trivial.
+- The `Data (Data)` layer is responsible for `creating`, `retrieving`, `updating` and `deleting` data in long-term storage. Most applications build with Shiny are for interactive reports and dashboards. Meaning data is only ingested from storage. However, when developing enterprise-level applications being able to create, retrieve, update or delete data in storage is a very common practice. Unfortunately, unlike `Entity Framework` in C#, R has no framework to build `Data Layers`. Typically a data access Layer includes features which translate R code to, for example, SQL statements. Input, Output and Structural Validation and Exception handling are also included. Injecting the data access layer into a Shiny application is trivial.
 
 Here is an example of how a data access layer is injected into the sample application:
 
@@ -317,9 +317,9 @@ The typical components in a Data Layer include:
 5. Validator
 6. Exceptions
 
-You can read all about the details of each of these components [here](https://github.com/hassanhabib/The-Standard). Here is an hiehg-level overview of each component:
+You can read all about the details of each of these components [here](https://github.com/hassanhabib/The-Standard). Here is an high-level overview of each component:
 
-The Todo application uses a Mock Storage Service. The Mock Storage Service is a simple in-memory data structure which implements the Broker interface. The Broker interface is used to perform primitive operations against the data in storage, while the service is used to perform input and output validation. The Validator Service is used to perform structural and logic validation. The Exception Service is used to handle exceptions. The Processing Service is used to perform higher-order operations and lastly the Orchestration Service is used to perform a sequence of operations as required by the application.
+The Todo application uses a Mock Storage Service. The Mock Storage Service is a simple in-memory data structure which implements the Broker interface. The Broker interface is used to perform primitive operations against the data in storage, while the service is used to perform input and output validation. The Validator Service is used to perform structural and logic validation. The Exception Service is used to handle exceptions. The Processing Service is used to perform higher-order operations, and lastly, the Orchestration Service is used to perform a sequence of operations as required by the application.
 
 Also, if you look closely at the `Todo.Controller` code previously presented, you will notice the use of the data layer:
 
@@ -330,4 +330,4 @@ Also, if you look closely at the `Todo.Controller` code previously presented, yo
 
 </details>
 
-Application architecture is a complex topic. The goal of this section was to provide a high-level overview of enterprise-level software development with a focus on R and its ecosystem. The information presented is simplified and generalized as much as possible. The best way to learn Shiny is by experimenting: clone the sample application and start playing with the code.
+Application architecture is a complex topic. This section aimed to provide a high-level overview of enterprise-level software development with a focus on R and its ecosystem. The information presented is simplified and generalized as much as possible. The best way to learn Shiny is by experimenting: clone the sample application and start playing with the code.
