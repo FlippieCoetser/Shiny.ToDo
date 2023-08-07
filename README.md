@@ -305,9 +305,9 @@ shinyServer(\(input, output, session) {
 ```
 
 <details>
-  <summary>Custom Data Access Layer</summary>
+  <summary>Custom Data Layer</summary>
 
-The typical components in a Data Access Layer include:
+The typical components in a Data Layer include:
 
 1. Broker
 2. Service
@@ -316,9 +316,11 @@ The typical components in a Data Access Layer include:
 5. Validator
 6. Exceptions
 
-Refer to the Todo application, [here](https://github.com/FlippieCoetser/Shiny.ToDo), for a complete example. The Todo application uses a Mock Storage Service. The Mock Storage Service is a simple in-memory data structure which implements the Broker interface. The Broker interface is used to perform primitive operations against the data in storage, while the service is used to perform input and output validation.
+You can read all about the details of each of these components [here](https://github.com/hassanhabib/The-Standard). Here is an hiehg-level overview of each component:
 
-Also, if you look closely at the `Todo.Controller` code previously presented, you will notice the use of the data access layer:
+The Todo application uses a Mock Storage Service. The Mock Storage Service is a simple in-memory data structure which implements the Broker interface. The Broker interface is used to perform primitive operations against the data in storage, while the service is used to perform input and output validation. The Validator Service is used to perform structural and logic validation. The Exception Service is used to handle exceptions. The Processing Service is used to perform higher-order operations and lastly the Orchestration Service is used to perform a sequence of operations as required by the application.
+
+Also, if you look closely at the `Todo.Controller` code previously presented, you will notice the use of the data layer:
 
 1. Create Todo: `state[["todos"]] <- input[["newTask"]] |> Todo.Model() |> data[['UpsertRetrieve']]()`
 2. Retrieve Todo: `state[["todos"]] <- data[['Retrieve']]()`
@@ -327,4 +329,4 @@ Also, if you look closely at the `Todo.Controller` code previously presented, yo
 
 </details>
 
-Application architecture is a complex topic. The goal of this section was to provide a high-level overview of enterprise-level software development with a focus on R and its ecosystem. The information presented is simplified and generalized as much as possible. The best way to learn Shiny is by experimenting: clone the sample application and start playing with the code. You can find the sample application [here](https://github.com/FlippieCoetser/Shiny.ToDo)
+Application architecture is a complex topic. The goal of this section was to provide a high-level overview of enterprise-level software development with a focus on R and its ecosystem. The information presented is simplified and generalized as much as possible. The best way to learn Shiny is by experimenting: clone the sample application and start playing with the code.
