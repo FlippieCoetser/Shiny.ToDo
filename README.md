@@ -5,9 +5,10 @@ This repository contains a sample `Shiny` application which can be used as a boi
 The unique feature of the ToDo App includes a:
 
 1. Custom Shiny Module
-2. Custom Data Layer
-3. Units Test with 100% Data Layer Coverage
-4. Github Workflow with Automated Unit Testing
+2. Custom Event Handler
+3. Custom Data Layer
+4. Units Test with 100% Data Layer Coverage
+5. Github Workflow with Automated Unit Testing
 
 ## Getting Started
 
