@@ -1,22 +1,30 @@
 # Interactive Applications in R
+
 This repository contains a sample `Shiny` application which can be used as a boilerplate when developing enterprise-level applications using the R programming languages.
 
 The unique feature of the ToDo App includes a:
+
 1. Custom Shiny Module
 2. Custom Data Layer
 3. Units Test with 100% Data Layer Coverage
 4. Github Workflow with Automated Unit Testing
 
 ## Getting Started
+
 ### Installation
+
 Whether your development environment is based on RStudio or VS Code the installation follows the same steps:
+
 1. R `devtools` is required. Install and Reboot:
+
 ```r
 install.packages("devtools")
 ```
-I you have difficulty please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions.  
+
+I you have difficulty please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions.
 
 2. Install the application dependencies:
+
 ```r
 install.packages("dplyr")
 install.packages("stringr")
@@ -26,48 +34,59 @@ install.packages("DT")
 install.packages("shinytest2)
 install.packages("uuid")
 ```
+
 3. Install a Mock Storage Service from GitHub:
+
 ```r
 devtools::install_github("https://github.com/FlippieCoetser/Storage")
 ```
+
 4. Clone this repository:
+
 ```bash
 git clone https://github.com/FlippieCoetser/Shiny.ToDo.git
 ```
 
 ### Run Application
+
 Follow these steps to run the application:
+
 1. Open your development environment and ensure your working directory is correct.
-Since the repository is called `Shiny.ToDo`, you should have such a directory in the location where your cloned the repository.
-In RStudio or VS Code R terminal, you can use `getwd()` and `setwd()` to get or set the current working directory.
-Example:
+   Since the repository is called `Shiny.ToDo`, you should have such a directory in the location where your cloned the repository.
+   In RStudio or VS Code R terminal, you can use `getwd()` and `setwd()` to get or set the current working directory.
+   Example:
+
 ```r
 getwd()
 # Prints: "C:/Data/Shiny.Todo"
 ```
 
 3. Load `Shiny` Package
+
 ```r
 library(shiny)
 ```
 
 4. Run the application:
+
 ```r
 runApp()
 ```
 
 5. Application should open with this screen:
 
+![Enterprise Application Hierarchy](/ToDo.PNG)
 
 ## Shiny Software Arhitecture
+
 ### Functional Decomposition
+
 In textbooks focusing on software architecture, it is typical to see a software application segmented into three layers: `User Interface`, `Business Logic`, and `Data`.
-Although this is not the only way to design software architecture, it aligns well with this ToDo sample application. 
+Although this is not the only way to design software architecture, it aligns well with this ToDo sample application.
 
-Before we dive into the details of each layer, it is important to understand just like `vue.js` and `react` in Javascript or `Blazor` in C#, R has the `Shiny` application framework. Shiny is an open-source framework made available as an R package that allows users to build interactive web applications directly from R. Shiny is intended to simplify the process of producing web-friendly, interactive data visualizations and makes it easier for R users who might not necessarily have the expertise in web development languages like HTML, CSS, and Javascript.  
+Before we dive into the details of each layer, it is important to understand just like `vue.js` and `react` in Javascript or `Blazor` in C#, R has the `Shiny` application framework. Shiny is an open-source framework made available as an R package that allows users to build interactive web applications directly from R. Shiny is intended to simplify the process of producing web-friendly, interactive data visualizations and makes it easier for R users who might not necessarily have the expertise in web development languages like HTML, CSS, and Javascript.
 
-So, we will focus on the Shiny framework when discussing the different layers. I will refer to the code in this `ToDo` to keep the discussion relevant. 
-
+So, we will focus on the Shiny framework when discussing the different layers. I will refer to the code in this `ToDo` to keep the discussion relevant.
 
 - The `User Interface (UI)` layer is responsible for the look and feel of the application using `layout`, `input` and `output` widgets. When using Shiny the UI layer is defined, by convention, in a file called `ui.R`.
 
