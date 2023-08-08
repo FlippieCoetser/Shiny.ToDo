@@ -4,7 +4,7 @@
 configuration <- data.frame()
 storage       <- configuration |> Storage::Mock.Storage.Service()
 
-# Data Access Layer
+# Data Layer
 data  <- storage |> Todo.Orchestration()
 
 shinyServer(\(input, output, session) {
