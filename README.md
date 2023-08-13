@@ -76,7 +76,7 @@ runApp()
 
 5. Application should open with this screen:
 
-![Enterprise Application Hierarchy](/ToDo.PNG)
+![Enterprise Application Hierarchy](/man/figures/ToDo.PNG)
 
 ## Shiny Software Architecture
 
@@ -84,7 +84,7 @@ runApp()
 
 In textbooks focusing on software architecture, it is typical to see a software application segmented into three layers: `User Interface`, `Business Logic`, and `Data`.
 
-![Architecture](/ToDo.Module.png)
+![Architecture](/man/figures//ToDo.Module.png)
 
 Although this is not the only way to design software architecture, it aligns well with this ToDo sample application.
 
