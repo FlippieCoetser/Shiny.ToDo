@@ -78,33 +78,46 @@ runApp()
 
 ![Enterprise Application Hierarchy](/man/figures/App.Final.PNG)
 
-## Shiny Software Architecture
+## Software Architecture
+
+Before jumping into the details of the ToDo Application, it is important to understand the software architecture used. This is best explained by functionally decomposing the application into different layers with accompanying diagrams.
 
 ### Functional Decomposition
 
 In textbooks focusing on software architecture, it is typical to see a software application segmented into three layers: `User Interface`, `Business Logic`, and `Data`.
 
-![Architecture](/man/figures//ToDo.Module.png)
+![Architecture](/man/figures//Architecture.png)
 
-Although this is not the only way to design software architecture, it aligns well with this ToDo sample application.
+- The `User Interface (UI)` layer is responsible for the look and feel of the application. It is the layer that the user interacts with.
 
-Before we dive into the details of each layer, it is important to understand just like `vue.js` and `react` in Javascript or `Blazor` in C#, R has the `Shiny` application framework. Shiny is an open-source framework made available as an R package that allows users to build interactive web applications directly from R. Shiny is intended to simplify the process of producing web-friendly, interactive data visualizations and makes it easier for R users who might not necessarily have the expertise in web development languages like HTML, CSS, and Javascript.
+- The `Business Logic (BL)` layer is responsible for the business rules of the application. It is the layer that contains the application logic.
 
-So, we will focus on the Shiny framework when discussing the different layers. I will refer to the code in this `ToDo` to keep the discussion relevant.
+- The `Data` layer is responsible for the data persistence of the application. It is the layer that contains the data access logic.
 
-- The `User Interface (UI)` layer is responsible for the look and feel of the application using `layout`, `input` and `output` widgets. When using Shiny the UI layer is defined, by convention, in a file called `ui.R`.
+### Shiny Application Architecture
 
-Here is an example of the contents of a `ui.R` file:
+The software architecture presented above is not the only approach to designing software. However, as you will see it aligns well with the sample application build using `shiny`. But what is `shiny`? `Shiny` is an open-source framework made available as an R package that allows users to build interactive web applications directly from R. Shiny is intended to simplify the process of producing web-friendly, interactive data visualizations and makes it easier for R users who might not necessarily have the expertise in web development languages like HTML, CSS, and Javascript. In essence just like `vue.js` and `react` in Javascript or `Blazor` in C#, R has the `Shiny` application framework.
+
+However, the `shiny` framework does not include a `data` layer. This is because most application developed with `shiny` only ingests data from an external source once the application starts. The data is then stored in memory and manipulated by the `business logic` layer. Below is a update architecture diagram which better reflects applications build with the `shiny` framework:
+
+![Architecture](/man/figures//Shiny.Architecture.png)
+
+This is not ideal for enterprise-level applications. In enterprise-level applications is more transaction based: data is not only ingested but rather the ability to create, retrieve, update or deleted from storage in very common. This sample application includes a custom `data` layer with all four common data operations: Create, Retrieve, Update and Delete (CRUD). We will look this in more detail later.
+
+For now we return to the typical `shiny` application architecture:
+
+- The `User Interface (UI)` is defined using different `layout`, `input`, `output` widgets and contained in the `ui.R` file. Let's take a look at the `ui.R` file in the repository to see how the UI is defined:
 
 ```r
 header  <- dashboardHeader(
-  disable = TRUE
+  title = "ToDo App"
 )
 sidebar <- dashboardSidebar(
   disable = TRUE
 )
 body    <- dashboardBody(
-  Todo.View("todo")
+  Todo.View("todo"),
+  Custom.Style()
 )
 
 dashboardPage(
@@ -114,12 +127,32 @@ dashboardPage(
 )
 ```
 
-From a layout perspective, you can see we have a `dashboardPage` which contains `header`, `sidebar` and `body` widgets. For simplicity, the `header` and `sidebar` elements are disabled. The `body` element contains a custom shiny widget: `Todo.View`. Using custom shiny widgets allows us to build modular UI components, which increase reusability and scalability.
+From a layout perspective, you can see we have a `dashboardPage` which contains `header`, `sidebar` and `body` widgets. For simplicity, the `sidebar` have been disabled. The `body` element contains a custom shiny widget: `Todo.View` and `Custom.Style()`. Although not used in the main `UI` layer, there are many standard `shiny` widgets which can be used. We will explore some when we look at the custom `Todo.View` widget.
+
+- The `Business Logic (BL)` layer reacts to events from `input` widgets and updating of contents in `output` widgets using some predefined logic. The logic is defined in the `server.R` file. Referring back to the diagram, `2` represent events from `input` widgets captured by reactive function in the `BL` layer, while `3` represent updates pushed by the `BL` layer to `output` widgets.
+
+Let's take a look at the `server.R` file in the repository to see how the `BL` layer is defined:
+
+```r
+shinyServer(\(input, output, session) {
+  Todo.Controller("todo", data)
+})
+```
+
+The `shinyServer` is part of the `shiny` framework and takes a function in which all `Business Logic` are defined. If you take a closer look at the arguments on this function you will notice `input` and `output` arguments. These arguments is how one can capture event on `input` widgets or send updates to `output` widgets. The reference to the `Todo.Controller` is part of the custom shiny module we will discuss next.
+
+### Shiny Module Architecture
+
+At this point it should not come as a surprise that custom module architecture is the same as the core architecture. The main difference is that the `UI` and `BL` layers are encapsulated in a module: `Todo.View` and `Todo.Controller`. Here is an update diagram with the custom `shiny` module:
+
+![Architecture](/man/figures//Shiny.Module.Architecture.png)
+
+Important point to note: custom shiny modules always come in a pair: `View` and `Controller`. The `View` is the `UI` layer or the module, while the `Controller` is the `BL` layer. Unlike the core application, the `View` and `Controller` modules are not defined in separate files inside the `R` folder. The advantage of using custom shiny modules is that it allows us to build modular UI components, which increase reusability and scalability.
+
+Lets look at the `Todo.View` module in more detail. Here are the contents of the `Todo.View` file:
 
 <details>
-  <summary>Custom Shiny UI Widget</summary>
-
-Here are the contents of the `Todo.View` file:
+  <summary>Module UI Layer</summary>
 
 ```r
 Todo.View <- \(id) {
@@ -176,29 +209,10 @@ There are many more widgets available in the Shiny framework. You can find a com
 
 </details>
 
-- The `Business Logic (BL)` layer is responsible for the logic used to react to events from input widgets and updating of contents in output widgets. Shiny has many different reactive functions which are defined, again by convention, in a file called `server.R`.
-
-Here is an example of the contents of a `server.R` file:
-
-```r
-# Mock Storage
-configuration <- data.frame()
-storage       <- configuration |> Storage::Mock.Storage.Service()
-
-# Data Access Layer
-data  <- storage |> Todo.Orchestration()
-
-shinyServer(\(input, output, session) {
-  Todo.Controller("todo", data)
-})
-```
-
-When using a custom shiny widget, like `Todo.View`, an accompanied business logic component is required: `Todo.Controller`.
+Lets look at the `Todo.Controller` module in more detail. Here are the contents of the `Todo.Controller` file:
 
 <details>
-  <summary>Custom Shiny Controller</summary>
-
-Here are the contents of the `Todo.Controller` file:
+  <summary>Module BL Layer</summary>
 
 ```r
 Todo.Controller <- \(id, data) {
@@ -251,6 +265,18 @@ Todo.Controller <- \(id, data) {
         state[["todos"]] <- state[["todo"]][["Id"]] |> data[['DeleteRetrieve']]()
       }
 
+      # Table Configuration
+      table.options <- list(
+        dom = "t",
+        ordering = FALSE,
+        columnDefs = list(
+          list(visible = FALSE, targets = 0),
+          list(width = '50px', targets = 1),
+          list(className = 'dt-center', targets = 1),
+          list(className = 'dt-left', targets = 2)
+        )
+      )
+
       # Output Bindings
       output[["todos"]] <- DT::renderDataTable({
         DT::datatable(
@@ -258,16 +284,7 @@ Todo.Controller <- \(id, data) {
           selection = 'single',
           rownames = FALSE,
           colnames = c("", ""),
-          options = list(
-            dom = "t",
-            ordering = FALSE,
-            columnDefs = list(
-              list(visible = FALSE, targets = 0),
-              list(width = '50px', targets = 1),
-              list(className = 'dt-center', targets = 1),
-              list(className = 'dt-left', targets = 2)
-            )
-          )
+          options = table.options
         )
       })
       output[["isSelectedTodoVisible"]] <- reactive({ is.data.frame(state[["todo"]]) })
@@ -284,11 +301,15 @@ The `Todo.Controller` is a `reactive` function which takes two arguments: `id` a
 3. User Actions: `controller`
 4. Output Bindings: `output`
 
+From a high level, the module `Business Logic` uses `observerEvent` to capture events from `input` widgets, execute logic using the `controller` and update the `output` using `reactiveValues`.
+
 Many more Reactive programming functions are available as part of the Shiny framework. You can find a complete list under the Reactive Programming section [here](https://shiny.posit.co/r/reference/shiny/latest/).
 
 </details>
 
-- The `Data (Data)` layer is responsible for `creating`, `retrieving`, `updating` and `deleting` data in long-term storage. Most applications build with Shiny are for interactive reports and dashboards. Meaning data is only ingested from storage. However, when developing enterprise-level applications being able to create, retrieve, update or delete data in storage is a very common practice. Unfortunately, unlike `Entity Framework` in C#, R has no framework to build `Data Layers`. Typically a data access Layer includes features which translate R code to, for example, SQL statements. Input, Output and Structural Validation and Exception handling are also included. Injecting the data access layer into a Shiny application is trivial.
+### Data Access Layer
+
+- The `Data (Data)` layer is responsible for `creating`, `retrieving`, `updating` and `deleting` data in long-term storage. Unfortunately, unlike `Entity Framework` in C#, R has no framework to build `Data Layers`. Typically a data access Layer includes features which translate R code to, for example, SQL statements. Input, Output and Structural Validation and Exception handling are also included. Injecting the data access layer into a Shiny application is trivial.
 
 Here is an example of how a data access layer is injected into the sample application:
 
