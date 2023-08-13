@@ -17,36 +17,53 @@ The unique feature of the ToDo App includes a:
 
 Whether your development environment is based on RStudio or VS Code the installation follows the same steps:
 
-1. R `devtools` is required. Install and Reboot:
+#### Package Dependencies
+
+1. R `devtools` is used to build packages and required.
 
 ```r
 install.packages("devtools")
 ```
 
-If you have difficulty, please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions.
+If you have difficulty, please consult this [page](https://www.r-project.org/nosvn/pandoc/devtools.html) for manual installation instructions of `devtools`.
 
-2. Install the application dependencies:
+2. The Todo app is be build using the `shiny` and `shinydashboard` framework.
 
 ```r
 install.packages("shiny")
 install.packages("shinydashboard")
+```
+
+3. Additional dependencies to manipulate and display data is also required.
+
+```r
 install.packages("dplyr")
 install.packages("DT")
-install.packages("shinytest2")
 install.packages("uuid")
 ```
 
-3. Install a Mock Storage Service from GitHub:
+4. A Mock Storage service is used to simulate a connection to a database.
+   This service is made available as a package on GitHub and can be installed using `devtools`.
 
 ```r
 devtools::install_github("https://github.com/FlippieCoetser/Storage")
 ```
 
-4. Clone this repository:
+5. Lastly, the Todo app is build using a test-driven approach. The `shinytest2` package is used to write and run unit tests.
+
+```r
+install.packages("shinytest2")
+```
+
+#### Clone Repository
+
+1. Clone this repository:
 
 ```bash
 git clone https://github.com/FlippieCoetser/Shiny.ToDo.git
 ```
+
+> Note: The main branch contains the complete application. If you want to explore the progression of the application from empty shiny app to the final product, you can checkout the different branches.
 
 ### Run Application
 
@@ -59,7 +76,6 @@ Follow these steps to run the application:
 
 ```r
 getwd()
-# Prints: "C:/Data/Shiny.Todo"
 ```
 
 3. Load `Shiny` Package
@@ -74,7 +90,7 @@ library(shiny)
 runApp()
 ```
 
-5. Application should open with this screen:
+5. When using the main branch the application should open with this screen:
 
 ![Enterprise Application Hierarchy](/man/figures/ToDo.PNG)
 

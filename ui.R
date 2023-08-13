@@ -1,13 +1,6 @@
-header  <- dashboardHeader(
-  title = "ToDo App"
-)
-sidebar <- dashboardSidebar(
-  disable = TRUE
-)
-body    <- dashboardBody(
-  Todo.View("todo"),
-  Custom.Style()
-)
+header  <- dashboardHeader()
+sidebar <- dashboardSidebar()
+body    <- dashboardBody()
 
 dashboardPage(
   header,
