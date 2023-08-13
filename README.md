@@ -149,7 +149,11 @@ At this point it should not come as a surprise that custom module architecture i
 
 Important point to note: custom shiny modules always come in a pair: `View` and `Controller`. The `View` is the `UI` layer or the module, while the `Controller` is the `BL` layer. Unlike the core application, the `View` and `Controller` modules are not defined in separate files inside the `R` folder. The advantage of using custom shiny modules is that it allows us to build modular UI components, which increase reusability and scalability.
 
-Lets look at the `Todo.View` module in more detail. Here are the contents of the `Todo.View` file:
+Lets look at the `Todo.View` module in more detail.
+
+![Architecture](/man/figures//Shiny.Module.UI.png)
+
+Here are the contents of the `Todo.View` file:
 
 <details>
   <summary>Module UI Layer</summary>
@@ -209,7 +213,11 @@ There are many more widgets available in the Shiny framework. You can find a com
 
 </details>
 
-Lets look at the `Todo.Controller` module in more detail. Here are the contents of the `Todo.Controller` file:
+Lets look at the `Todo.Controller` module in more detail.
+
+![Architecture](/man/figures//Shiny.Module.BL.png)
+
+Here are the contents of the `Todo.Controller` file:
 
 <details>
   <summary>Module BL Layer</summary>
