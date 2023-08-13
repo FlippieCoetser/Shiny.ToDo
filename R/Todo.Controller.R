@@ -48,6 +48,18 @@ Todo.Controller <- \(id, data) {
         state[["todos"]] <- state[["todo"]][["Id"]] |> data[['DeleteRetrieve']]()
       }
 
+      # Table Configuration
+      table.options <- list(
+        dom = "t",
+        ordering = FALSE,
+        columnDefs = list(
+          list(visible = FALSE, targets = 0),
+          list(width = '50px', targets = 1),
+          list(className = 'dt-center', targets = 1),
+          list(className = 'dt-left', targets = 2)
+        )
+      )
+
       # Output Bindings
       output[["todos"]] <- DT::renderDataTable({
         DT::datatable(
@@ -55,16 +67,7 @@ Todo.Controller <- \(id, data) {
           selection = 'single',
           rownames = FALSE,
           colnames = c("", ""),
-          options = list(
-            dom = "t",
-            ordering = FALSE,
-            columnDefs = list(
-              list(visible = FALSE, targets = 0),
-              list(width = '50px', targets = 1),
-              list(className = 'dt-center', targets = 1),
-              list(className = 'dt-left', targets = 2)
-            )
-          )
+          options = table.options
         )
       })  
       output[["isSelectedTodoVisible"]] <- reactive({ is.data.frame(state[["todo"]]) })
