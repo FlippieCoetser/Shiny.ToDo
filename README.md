@@ -129,7 +129,7 @@ dashboardPage(
 
 From a layout perspective, you can see we have a `dashboardPage` which contains `header`, `sidebar` and `body` widgets. For simplicity, the `sidebar` have been disabled. The `body` element contains a custom shiny widget: `Todo.View` and `Custom.Style()`. Although not used in the main `UI` layer, there are many standard `shiny` widgets which can be used. We will explore some when we look at the custom `Todo.View` widget.
 
-- The `Business Logic (BL)` layer reacts to events from `input` widgets and updating of contents in `output` widgets using some predefined logic. The logic is defined in the `server.R` file. Referring back to the diagram, `2` represent events from `input` widgets captured by reactive function in the `BL` layer, while `3` represent updates pushed by the `BL` layer to `output` widgets.
+- The `Business Logic (BL)` layer reacts to events from `input` widgets and updating of contents in `output` widgets using some predefined logic. The logic is defined in the `server.R` file. Referring back to the diagram, `3` represent events from `input` widgets captured by reactive function in the `BL` layer, while `2` represent updates pushed by the `BL` layer to `output` widgets.
 
 Let's take a look at the `server.R` file in the repository to see how the `BL` layer is defined:
 
