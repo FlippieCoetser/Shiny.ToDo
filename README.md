@@ -76,7 +76,7 @@ runApp()
 
 5. Application should open with this screen:
 
-![Enterprise Application Hierarchy](/man/figures/ToDo.PNG)
+![Enterprise Application Hierarchy](/man/figures/App.Final.PNG)
 
 ## Shiny Software Architecture
 
