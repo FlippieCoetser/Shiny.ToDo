@@ -5,7 +5,8 @@ sidebar <- dashboardSidebar(
   disable = TRUE
 )
 body    <- dashboardBody(
-  Todo.View("todo")
+  Todo.View("todo"),
+  Custom.Style()
 )
 
 dashboardPage(
