@@ -315,7 +315,7 @@ Many more Reactive programming functions are available as part of the Shiny fram
 
 </details>
 
-### Data Access Layer
+### Data Layer
 
 - The `Data (Data)` layer is responsible for `creating`, `retrieving`, `updating` and `deleting` data in long-term storage. Unfortunately, unlike `Entity Framework` in C#, R has no framework to build `Data Layers`. Typically a data access Layer includes features which translate R code to, for example, SQL statements. Input, Output and Structural Validation and Exception handling are also included. Injecting the data access layer into a Shiny application is trivial.
 
