@@ -27,10 +27,9 @@ If you have difficulty, please consult this [page](https://www.r-project.org/nos
 2. Install the application dependencies:
 
 ```r
-install.packages("dplyr")
-install.packages("stringr")
 install.packages("shiny")
 install.packages("shinydashboard")
+install.packages("dplyr")
 install.packages("DT")
 install.packages("shinytest2")
 install.packages("uuid")
