@@ -1,5 +1,5 @@
 header  <- dashboardHeader(
-  disable = TRUE
+  title = "ToDo App"
 )
 sidebar <- dashboardSidebar(
   disable = TRUE
