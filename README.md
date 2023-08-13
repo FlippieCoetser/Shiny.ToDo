@@ -145,7 +145,7 @@ The `shinyServer` is part of the `shiny` framework and takes a function in which
 
 At this point it should not come as a surprise that custom module architecture is the same as the core architecture. The main difference is that the `UI` and `BL` layers are encapsulated in a module: `Todo.View` and `Todo.Controller`. Here is an update diagram with the custom `shiny` module:
 
-![Architecture](/man/figures//Shiny.Module.Architecture.png)
+![Architecture](/man/figures//Shiny.Module.Overview.png)
 
 Important point to note: custom shiny modules always come in a pair: `View` and `Controller`. The `View` is the `UI` layer or the module, while the `Controller` is the `BL` layer. Unlike the core application, the `View` and `Controller` modules are not defined in separate files inside the `R` folder. The advantage of using custom shiny modules is that it allows us to build modular UI components, which increase reusability and scalability.
 
