@@ -53,10 +53,6 @@ describe('When services <- Todo.Service()',{
 describe("When todo |> service[['Add']]()",{
   it('then todo is added to storage',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     random.todo <- 'Task' |> Todo.Model()
@@ -70,14 +66,10 @@ describe("When todo |> service[['Add']]()",{
     # Then
     retrieved.todo <- new.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() 
 
-    retrieved.todo |> expect.equal(expected.todo)
+    retrieved.todo |> expect.equal.data(expected.todo)
   })
   it('then an exception is thrown if todo has no Id',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -93,10 +85,6 @@ describe("When todo |> service[['Add']]()",{
   })
   it('then an exception is thrown if todo has no Task',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -112,10 +100,6 @@ describe("When todo |> service[['Add']]()",{
   })
   it('then an exception is thrown if todo has no Status',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -131,10 +115,6 @@ describe("When todo |> service[['Add']]()",{
   })
   it('then an exception is thrown if todo is null',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- NULL
@@ -147,10 +127,6 @@ describe("When todo |> service[['Add']]()",{
   })
   it('then an exception is thrown if todo already exist',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -165,10 +141,6 @@ describe("When todo |> service[['Add']]()",{
 describe("When service[['Retrieve']]()",{
   it('then all todos are retrieved from storage',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     expected.todos <- storage[['Todo']][['Select']]()
@@ -183,10 +155,6 @@ describe("When service[['Retrieve']]()",{
 describe("When id |> service[['RetrieveById']]()",{
   it('then todo with matching id is retrieved from storage',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -204,10 +172,6 @@ describe("When id |> service[['RetrieveById']]()",{
   })
   it("then an exception is thrown if id is NULL",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     id <- NULL
@@ -221,10 +185,6 @@ describe("When id |> service[['RetrieveById']]()",{
 describe("When todo |> service[['Modify']]()",{
   it('then todo is updated in storage',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <- storage |> Todo.Broker() |> Todo.Service()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -246,10 +206,6 @@ describe("When todo |> service[['Modify']]()",{
   })
   it('then an exception is thrown if todo has no Id',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -265,10 +221,6 @@ describe("When todo |> service[['Modify']]()",{
   })
   it('then an exception is thrown if todo has no Task',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -284,10 +236,6 @@ describe("When todo |> service[['Modify']]()",{
   })
   it('then an exception is thrown if todo has no Status',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
@@ -303,10 +251,6 @@ describe("When todo |> service[['Modify']]()",{
   })
   it('then an exception is thrown if todo is null',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- NULL
@@ -321,10 +265,6 @@ describe("When todo |> service[['Modify']]()",{
 describe("When id |> service[['Remove']]()",{
   it('then todo is deleted from storage',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <- storage |> Todo.Broker() |> Todo.Service()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -337,10 +277,6 @@ describe("When id |> service[['Remove']]()",{
   })
   it('then an exception is thrown if id is null',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     service <- storage |> Todo.Broker() |> Todo.Service()
 
     id <- NULL

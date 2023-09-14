@@ -7,11 +7,6 @@ describe('Given Todo.Processing',{
 
 describe('When processors <- storage |> Todo.Processing()',{
   it('then processors is a list',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
@@ -19,11 +14,6 @@ describe('When processors <- storage |> Todo.Processing()',{
     processors |> expect.list()
   })
   it('then processors contains Retrieve processor',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
@@ -31,11 +21,6 @@ describe('When processors <- storage |> Todo.Processing()',{
     processors[['Retrieve']] |> expect.exist()
   })
   it('then processors contains Upsert processor',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
@@ -43,11 +28,6 @@ describe('When processors <- storage |> Todo.Processing()',{
     processors[['Upsert']] |> expect.exist()
   })
   it('then processors contains Remove processor',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     processors <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
@@ -59,10 +39,6 @@ describe('When processors <- storage |> Todo.Processing()',{
 describe("when process[['Retrieve']]()",{
   it("then a data.frame with all Todos are returned",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
     actual.todos   <- storage[['Todo']][['Select']]()
@@ -79,10 +55,6 @@ describe("when process[['Retrieve']]()",{
 describe("when todo |> process[['Upsert']]()",{
   it("then todo is added to todos if not exist",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
     random.todo   <- 'Task' |> Todo.Model()
@@ -99,10 +71,6 @@ describe("when todo |> process[['Upsert']]()",{
   })
   it("then todo is updated if exist",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -127,10 +95,6 @@ describe("when todo |> process[['Upsert']]()",{
 describe("then id |> process[['Remove']]()",{
   it("then todo is removed from todos",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)

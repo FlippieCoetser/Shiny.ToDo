@@ -7,11 +7,6 @@ describe('Given Todo.Orchestration',{
 
 describe('When orchestrations <- storage |> Todo.Orchestration()',{
   it('then operations is a list',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     orchestrations <- storage |> Todo.Orchestration()
 
@@ -19,11 +14,6 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations |> expect.list()
   })
   it('then orchestrations contain UpsertRetrieve orchestration',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     orchestrations <- storage |> Todo.Orchestration()
 
@@ -31,11 +21,6 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations[['UpsertRetrieve']] |> expect.exist()
   })
   it('then orchestrations contain Retrieve orchestration',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     orchestrations <- storage |> Todo.Orchestration()
 
@@ -43,11 +28,6 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
     orchestrations[['Retrieve']] |> expect.exist()
   })
   it('then orchestrations contain DeleteRetrieve orchestration',{
-    # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     # When
     orchestrations <- storage |> Todo.Orchestration()
 
@@ -59,10 +39,6 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
 describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
   it('then a data.frame with todos containing new todo is returned',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     orchestrate <- storage |> Todo.Orchestration()
 
     random.todo <- 'Task' |> Todo.Model()
@@ -78,10 +54,6 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
   })
   it("then a data.frame with todos containing update todo is returned",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     orchestrate <- storage |> Todo.Orchestration()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
@@ -107,10 +79,6 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
 describe('When orchestrate[["Retrieve"]]()',{
   it('then a data.frame with todos is returned',{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     orchestrate <- storage |> Todo.Orchestration()
 
     actual.todos   <- storage[['Todo']][['Select']]()
@@ -127,10 +95,6 @@ describe('When orchestrate[["Retrieve"]]()',{
 describe("When id |> orchestrate[['DeleteRetrieve']]()",{
   it("then a data.frame with todos excluding todo with id is returned",{
     # Given
-    configuration <- data.frame()
-
-    storage <- configuration |> Storage::Mock.Storage.Service()
-
     orchestrate <- storage |> Todo.Orchestration()
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
