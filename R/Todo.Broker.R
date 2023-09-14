@@ -1,21 +1,29 @@
 Todo.Broker <- \(storage){
+  sql.utilities <- Query::SQL.Utilities()
+  sql.functions <- Query::SQL.Functions()
+
+  table <- 'Todo'
+  fields <- list(
+    'Id'     |> sql.utilities[['BRACKET']]() |> sql.functions[['LOWER']]('Id'),
+    'Task'   |> sql.utilities[['BRACKET']](),
+    'Status' |> sql.utilities[['BRACKET']]()
+  )
+  
   operations <- list()
-
-  operations[['Insert']]     <- \(todo){
-    todo |> storage[['Todo']][['Insert']]()
+  operations[['Insert']]        <- \(todo) {
+    todo |> storage[['Insert']](table)
   }
-  operations[['Select']]     <- \(...){
-    ... |> storage[['Todo']][['Select']]()   
+  operations[['Select']]        <- \(...)  {
+    fields |> storage[['Select']](table)
   }
-  operations[['SelectById']] <- \(id){
-    id |> storage[['Todo']][['SelectWhereId']]()
+  operations[['SelectById']]    <- \(id)   {
+    fields |> storage[['SelectWhereId']](table, id)
   }
-  operations[['Update']]     <- \(todo){
-    todo |> storage[['Todo']][['Update']]()
+  operations[['Update']]        <- \(todo) {
+    todo |> storage[['Update']](table)
   }
-  operations[['Delete']]     <- \(id){
-    id |> storage[['Todo']][['Delete']]()
+  operations[['Delete']]        <- \(id)   {
+    id |> storage[['Delete']](table)
   }
-
   return(operations)
 }
