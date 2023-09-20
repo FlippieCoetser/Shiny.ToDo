@@ -27,9 +27,7 @@ mock.data[['Todo']] <- data.frame(
 )
 
 # Mock Storage Service Initialization
-storage <- configuration |> 
-  Storage::Mock.Storage.Broker(mock.data) |> 
-  Storage::Storage.Service()
+storage <- configuration |> Storage::Storage('Mock', mock.data)
 
 # Mock Storage Service Test Extensions
 storage[['Todo']][['SelectWhereId']] <- \(id) {
