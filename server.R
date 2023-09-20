@@ -6,9 +6,7 @@ configuration <- data.frame()
 mock.data <- list()
 mock.data[['Todo']] <- Todo.Data
 
-storage <- configuration |> 
-  Storage::Mock.Storage.Broker(mock.data) |>
-  Storage::Storage.Service()
+storage <- configuration |> Storage::Storage(type = "Mock", data = mock.data)
 
 # Data Layer
 data  <- storage |> Todo.Orchestration()
