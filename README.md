@@ -39,6 +39,8 @@ install.packages("uuid")
 3. Install a Mock Storage Service from GitHub:
 
 ```r
+devtools::install_github("https://github.com/FlippieCoetser/Environment")
+devtools::install_github("https://github.com/FlippieCoetser/Query")
 devtools::install_github("https://github.com/FlippieCoetser/Storage")
 ```
 
