@@ -19,7 +19,6 @@ table.fields[['Todo']] <- list(
 
 # Mock Storage Service Initialization
 storage <- configuration |> Storage::Storage('memory')
-Todo.Mock.Data |> storage[['Seed']]('Todo')
 
 # Mock Storage Service Test Extensions
 storage[['Todo']][['SelectWhereId']] <- \(id) {

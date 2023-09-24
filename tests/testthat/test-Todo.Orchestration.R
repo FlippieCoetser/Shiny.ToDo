@@ -40,6 +40,7 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
   it('then a data.frame with todos containing new todo is returned',{
     # Given
     orchestrate <- storage |> Todo.Orchestration()
+    Todo.Mock.Data |> storage[['Seed']]('Todo')
 
     random.todo <- 'Task' |> Todo.Model()
 
@@ -55,6 +56,7 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
   it("then a data.frame with todos containing update todo is returned",{
     # Given
     orchestrate <- storage |> Todo.Orchestration()
+    Todo.Mock.Data |> storage[['Seed']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -96,6 +98,7 @@ describe("When id |> orchestrate[['DeleteRetrieve']]()",{
   it("then a data.frame with todos excluding todo with id is returned",{
     # Given
     orchestrate <- storage |> Todo.Orchestration()
+    Todo.Mock.Data |> storage[['Seed']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
     existing.id <- existing.todo[['Id']]
