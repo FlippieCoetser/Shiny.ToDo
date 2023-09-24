@@ -17,22 +17,14 @@ table.fields[['Todo']] <- list(
   'Status' |> sql.utilities[['BRACKET']]()
 )
 
-mock.data <- list()
-mock.data[['Todo']] <- data.frame(
-  Id     = c('7ab3df6f-2e8f-44b4-87bf-3004cf1c16ae',
-            '7bfef861-6fe9-46da-9ad2-6a58779ccdcd',
-            'd3b59bf0-14f0-4444-9ec9-1913e7256ee4'),
-  Task   = c('Task.1','Task.2','Task.3'),
-  Status = c('New','New','Done')
-)
-
 # Mock Storage Service Initialization
-storage <- configuration |> Storage::Storage('memory', mock.data)
+storage <- configuration |> Storage::Storage('memory')
+Todo.Mock.Data |> storage[['Seed']]('Todo')
 
 # Mock Storage Service Test Extensions
 storage[['Todo']][['SelectWhereId']] <- \(id) {
-  table.fields[['Todo']] |> storage[['SelectWhereId']](table.name[['Todo']], id)
+  id |> storage[['SelectWhereId']](table.name[['Todo']], table.fields[['Todo']])
 }
 storage[['Todo']][['Select']] <- \() {
-  table.fields[['Todo']] |> storage[['Select']](table.name[['Todo']])
+  table.name[['Todo']] |> storage[['Select']](table.fields[['Todo']])
 }

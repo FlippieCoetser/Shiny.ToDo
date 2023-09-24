@@ -3,10 +3,8 @@
 # Configuration details can be stored in .Reviron file and retrieved via Environment Package
 configuration <- data.frame()
 
-mock.data <- list()
-mock.data[['Todo']] <- Todo.Data
-
-storage <- configuration |> Storage::Storage(type = "memory", data = mock.data)
+storage <- configuration |> Storage::Storage(type = "memory")
+Todo.Mock.Data |> storage[['Seed']]('Todo')
 
 # Data Layer
 data  <- storage |> Todo.Orchestration()
