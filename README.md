@@ -326,7 +326,10 @@ Here is an example of how a data access layer is injected into the sample applic
 ```r
 # Mock Storage
 configuration <- data.frame()
-storage       <- configuration |> Storage::Mock.Storage.Service()
+storage       <- configuration |> Storage::Storage(type = 'memory')
+
+table <- 'Todo'
+Todo.Mock.Data |> storage[['Seed']](table)
 
 # Data Access Layer
 data  <- storage |> Todo.Orchestration()
@@ -335,6 +338,8 @@ shinyServer(\(input, output, session) {
   Todo.Controller("todo", data)
 })
 ```
+
+> Refer to the `Storage` package documentation for more information [here](https://github.com/FlippieCoetser/Storage)
 
 <details>
   <summary>Custom Data Layer</summary>
