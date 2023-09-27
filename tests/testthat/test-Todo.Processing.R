@@ -56,7 +56,7 @@ describe("when todo |> process[['Upsert']]()",{
   it("then todo is added to todos if not exist",{
     # Given
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     random.todo   <- 'Task' |> Todo.Model()
     new.todo      <- random.todo 
@@ -73,7 +73,7 @@ describe("when todo |> process[['Upsert']]()",{
   it("then todo is updated if exist",{
     # Given
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -98,7 +98,7 @@ describe("then id |> process[['Remove']]()",{
   it("then todo is removed from todos",{
     # Given
     process <- storage |> Todo.Broker() |> Todo.Service() |> Todo.Processing()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 

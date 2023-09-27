@@ -54,7 +54,7 @@ describe("When todo |> operation[['Insert']]()",{
   it('then todo is inserted into storage',{
     # Given
     operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     new.todo      <- 'Task' |> Todo.Model()
     expected.todo <- new.todo
@@ -72,7 +72,7 @@ describe("When operation[['Select']]()",{
   it('then all todos are retrieved from storage',{
     # When
     operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     expected.todos <- storage[['Todo']][['Select']]()
 
@@ -87,7 +87,7 @@ describe("When id |> operation[['SelectById']]()",{
   it('then todo with matching id is retrieved from storage',{
     # When
     operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -105,7 +105,7 @@ describe("When todo |> operation[['Update']]()",{
   it('then todo is updated in storage',{
     # When
     operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -127,7 +127,7 @@ describe("When id |> operation[['Delete']]()",{
   it("then todo with matching id is deleted from storage",{
     # When
     operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 

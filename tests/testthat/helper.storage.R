@@ -22,8 +22,8 @@ storage <- configuration |> Storage::Storage('memory')
 
 # Mock Storage Service Test Extensions
 storage[['Todo']][['SelectWhereId']] <- \(id) {
-  id |> storage[['SelectWhereId']](table.name[['Todo']], table.fields[['Todo']])
+  id |> storage[['RetrieveWhereId']](table.name[['Todo']], table.fields[['Todo']])
 }
 storage[['Todo']][['Select']] <- \() {
-  table.name[['Todo']] |> storage[['Select']](table.fields[['Todo']])
+  table.name[['Todo']] |> storage[['Retrieve']](table.fields[['Todo']])
 }

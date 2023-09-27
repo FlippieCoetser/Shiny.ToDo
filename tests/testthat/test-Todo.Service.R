@@ -54,7 +54,7 @@ describe("When todo |> service[['Add']]()",{
   it('then todo is added to storage',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     random.todo <- 'Task' |> Todo.Model()
 
@@ -72,7 +72,7 @@ describe("When todo |> service[['Add']]()",{
   it('then an exception is thrown if todo has no Id',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Task = 'Task',
@@ -88,7 +88,7 @@ describe("When todo |> service[['Add']]()",{
   it('then an exception is thrown if todo has no Task',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Id = uuid::UUIDgenerate(),
@@ -104,7 +104,7 @@ describe("When todo |> service[['Add']]()",{
   it('then an exception is thrown if todo has no Status',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Id = uuid::UUIDgenerate(),
@@ -120,7 +120,7 @@ describe("When todo |> service[['Add']]()",{
   it('then an exception is thrown if todo is null',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- NULL
 
@@ -133,7 +133,7 @@ describe("When todo |> service[['Add']]()",{
   it('then an exception is thrown if todo already exist',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -148,7 +148,7 @@ describe("When service[['Retrieve']]()",{
   it('then all todos are retrieved from storage',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     expected.todos <- storage[['Todo']][['Select']]()
 
@@ -163,7 +163,7 @@ describe("When id |> service[['RetrieveById']]()",{
   it('then todo with matching id is retrieved from storage',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -181,7 +181,7 @@ describe("When id |> service[['RetrieveById']]()",{
   it("then an exception is thrown if id is NULL",{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     id <- NULL
 
@@ -195,7 +195,7 @@ describe("When todo |> service[['Modify']]()",{
   it('then todo is updated in storage',{
     # Given
     service <- storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -217,7 +217,7 @@ describe("When todo |> service[['Modify']]()",{
   it('then an exception is thrown if todo has no Id',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Task = 'Task',
@@ -233,7 +233,7 @@ describe("When todo |> service[['Modify']]()",{
   it('then an exception is thrown if todo has no Task',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Id = uuid::UUIDgenerate(),
@@ -249,7 +249,7 @@ describe("When todo |> service[['Modify']]()",{
   it('then an exception is thrown if todo has no Status',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- data.frame(
       Id = uuid::UUIDgenerate(),
@@ -265,7 +265,7 @@ describe("When todo |> service[['Modify']]()",{
   it('then an exception is thrown if todo is null',{
     # Given
     service <-  storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     invalid.todo <- NULL
 
@@ -280,7 +280,7 @@ describe("When id |> service[['Remove']]()",{
   it('then todo is deleted from storage',{
     # Given
     service <- storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
 
@@ -293,7 +293,7 @@ describe("When id |> service[['Remove']]()",{
   it('then an exception is thrown if id is null',{
     # Given
     service <- storage |> Todo.Broker() |> Todo.Service()
-    Todo.Mock.Data |> storage[['Seed']]('Todo')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
     id <- NULL
 
