@@ -38,9 +38,12 @@ describe('When orchestrations <- storage |> Todo.Orchestration()',{
 
 describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
   it('then a data.frame with todos containing new todo is returned',{
-    # Given
-    orchestrate <- storage |> Todo.Orchestration()
+    # Given    # When
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+
+    orchestrate <- storage |> Todo.Orchestration()
 
     random.todo <- 'Task' |> Todo.Model()
 
@@ -54,11 +57,14 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
     retrieved.todos |> expect.contain(expected.todo)
   })
   it("then a data.frame with todos containing update todo is returned",{
-    # Given
-    orchestrate <- storage |> Todo.Orchestration()
+    # Given    # When
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
-    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    orchestrate <- storage |> Todo.Orchestration()
+
+    existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     updated.todo  <- existing.todo
     updated.todo[['Task']] <- 'Updated Task'
@@ -80,10 +86,14 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
 
 describe('When orchestrate[["Retrieve"]]()',{
   it('then a data.frame with todos is returned',{
-    # Given
+    # Given    # When
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+
     orchestrate <- storage |> Todo.Orchestration()
 
-    actual.todos   <- storage[['Todo']][['Select']]()
+    actual.todos   <- table |> storage[['Retrieve']](fields)
     expected.todos <- actual.todos
 
     # When
@@ -96,11 +106,14 @@ describe('When orchestrate[["Retrieve"]]()',{
 
 describe("When id |> orchestrate[['DeleteRetrieve']]()",{
   it("then a data.frame with todos excluding todo with id is returned",{
-    # Given
-    orchestrate <- storage |> Todo.Orchestration()
+    # Given    # When
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
-    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    orchestrate <- storage |> Todo.Orchestration()
+
+    existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
     existing.id <- existing.todo[['Id']]
 
     # When 

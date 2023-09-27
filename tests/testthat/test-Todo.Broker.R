@@ -52,9 +52,13 @@ describe('When operations <- storage |> Todo.Broker()',{
 
 describe("When todo |> operation[['Insert']]()",{
   it('then todo is inserted into storage',{
-    # Given
-    operation <- storage |> Todo.Broker()
+    # When
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
+    
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+
+    operation <- storage |> Todo.Broker()
 
     new.todo      <- 'Task' |> Todo.Model()
     expected.todo <- new.todo
@@ -63,7 +67,7 @@ describe("When todo |> operation[['Insert']]()",{
     new.todo |> operation[['Insert']]()
 
     # Then
-    retrieved.todo <- new.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() 
+    retrieved.todo <- new.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
     
     retrieved.todo |> expect.equal.data(expected.todo)
   })
@@ -71,10 +75,14 @@ describe("When todo |> operation[['Insert']]()",{
 describe("When operation[['Select']]()",{
   it('then all todos are retrieved from storage',{
     # When
-    operation <- storage |> Todo.Broker()
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
+    
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
-    expected.todos <- storage[['Todo']][['Select']]()
+    operation <- storage |> Todo.Broker()
+
+    expected.todos <- table |> storage[['Retrieve']](fields) 
 
     # When
     retrieved.todos <- operation[['Select']]()
@@ -86,10 +94,14 @@ describe("When operation[['Select']]()",{
 describe("When id |> operation[['SelectById']]()",{
   it('then todo with matching id is retrieved from storage',{
     # When
-    operation <- storage |> Todo.Broker()
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
 
-    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    
+    operation <- storage |> Todo.Broker()
+    
+    existing.todo <- table |> storage[['Retrieve']](fields) |> head(1)
 
     input.todo    <- existing.todo
     expected.todo <- existing.todo
@@ -104,13 +116,17 @@ describe("When id |> operation[['SelectById']]()",{
 describe("When todo |> operation[['Update']]()",{
   it('then todo is updated in storage',{
     # When
-    operation <- storage |> Todo.Broker()
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
+    
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
-    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    operation <- storage |> Todo.Broker()
+
+    existing.todo <- table |> storage[['Retrieve']](fields) |> head(1)
 
     updated.todo <- existing.todo
-    updated.todo[['Status']] <- 'Done'
+    updated.todo[['Status']] <- 'Updated'
 
     expected.todo <- updated.todo
 
@@ -118,7 +134,7 @@ describe("When todo |> operation[['Update']]()",{
     updated.todo |> operation[['Update']]()
 
     # Then
-    retrieved.todo <- updated.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]()
+    retrieved.todo <- updated.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
 
     updated.todo |> expect.equal.data(retrieved.todo)
   })
@@ -126,16 +142,20 @@ describe("When todo |> operation[['Update']]()",{
 describe("When id |> operation[['Delete']]()",{
   it("then todo with matching id is deleted from storage",{
     # When
-    operation <- storage |> Todo.Broker()
+    configuration <- data.frame()
+    storage <- configuration |> Storage::Storage('memory')
+    
     Todo.Mock.Data |> storage[['SeedTable']]('Todo')
 
-    existing.todo <- storage[['Todo']][['Select']]() |> tail(1)
+    operation <- storage |> Todo.Broker()
+
+    existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     # When
     existing.todo[['Id']] |> operation[['Delete']]()
 
     # Then
-    retrieved.todo <- existing.todo[['Id']] |> storage[['Todo']][['SelectWhereId']]() 
+    retrieved.todo <- existing.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
     
     retrieved.todo |> expect.empty()
   })
