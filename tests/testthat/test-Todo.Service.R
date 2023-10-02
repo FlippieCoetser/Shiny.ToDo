@@ -55,7 +55,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -76,7 +76,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -95,7 +95,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     invalid.todo <- data.frame(
@@ -113,7 +113,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -132,7 +132,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -148,7 +148,7 @@ describe("When todo |> service[['Add']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -166,7 +166,7 @@ describe("When service[['Retrieve']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -184,7 +184,7 @@ describe("When id |> service[['RetrieveById']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -205,7 +205,7 @@ describe("When id |> service[['RetrieveById']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -222,7 +222,7 @@ describe("When todo |> service[['Modify']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -247,7 +247,7 @@ describe("When todo |> service[['Modify']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -266,7 +266,7 @@ describe("When todo |> service[['Modify']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     invalid.todo <- data.frame(
@@ -284,7 +284,7 @@ describe("When todo |> service[['Modify']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
@@ -303,7 +303,7 @@ describe("When todo |> service[['Modify']]()",{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     invalid.todo <- NULL
@@ -321,7 +321,7 @@ describe("When id |> service[['Remove']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
 
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
@@ -337,7 +337,7 @@ describe("When id |> service[['Remove']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
 
-    Todo.Mock.Data |> storage[['SeedTable']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
 
     service <- storage |> Todo.Broker() |> Todo.Service()
 

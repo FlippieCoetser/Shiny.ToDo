@@ -329,7 +329,7 @@ configuration <- data.frame()
 storage       <- configuration |> Storage::Storage(type = 'memory')
 
 table <- 'Todo'
-Todo.Mock.Data |> storage[['SeedTable']](table)
+Todo.Mock.Data |> storage[['Seed.Table']](table)
 
 # Data Access Layer
 data  <- storage |> Todo.Orchestration()
