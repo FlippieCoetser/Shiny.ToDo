@@ -68,11 +68,11 @@ describe("When todo |> service[['Add']]()",{
     new.todo |> service[["Add"]]()
 
     # Then
-    retrieved.todo <- new.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- new.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
 
     retrieved.todo |> expect.equal.data(expected.todo)
   })
-  it('then an exception is thrown if todo has no Id',{
+  it('then an exception is thrown if todo has no id',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -81,17 +81,17 @@ describe("When todo |> service[['Add']]()",{
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
-      Task = 'Task',
-      Status = 'New'
+      task = 'Task',
+      status = 'New'
     )
 
     new.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Id'
+    expected.error <- 'todo data frame has no id'
 
     # Then
     new.todo |> service[["Add"]]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Task',{
+  it('then an exception is thrown if todo has no task',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -99,17 +99,17 @@ describe("When todo |> service[['Add']]()",{
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     invalid.todo <- data.frame(
-      Id = uuid::UUIDgenerate(),
-      Status = 'New'
+      id = uuid::UUIDgenerate(),
+      status = 'New'
     )
 
     new.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Task'
+    expected.error <- 'todo data frame has no task'
 
     # Then
     new.todo |> service[["Add"]]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Status',{
+  it('then an exception is thrown if todo has no status',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -118,12 +118,12 @@ describe("When todo |> service[['Add']]()",{
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
-      Id = uuid::UUIDgenerate(),
-      Task = 'Task'
+      id = uuid::UUIDgenerate(),
+      task = 'Task'
     )
 
     new.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Status'
+    expected.error <- 'todo data frame has no status'
 
     # Then
     new.todo |> service[["Add"]]() |> expect.error(expected.error)
@@ -194,12 +194,12 @@ describe("When id |> service[['RetrieveById']]()",{
     expected.todo <- existing.todo
 
     # When
-    retrieved.todo <- input.todo[['Id']] |> service[['RetrieveById']]()
+    retrieved.todo <- input.todo[['id']] |> service[['RetrieveById']]()
 
     # Then
-    retrieved.todo[['Id']]     |> expect.equal(expected.todo[["Id"]])
-    retrieved.todo[['Task']]   |> expect.equal(expected.todo[["Task"]])
-    retrieved.todo[['Status']] |> expect.equal(expected.todo[["Status"]])
+    retrieved.todo[['id']]     |> expect.equal(expected.todo[["id"]])
+    retrieved.todo[['task']]   |> expect.equal(expected.todo[["task"]])
+    retrieved.todo[['status']] |> expect.equal(expected.todo[["status"]])
   })
   it("then an exception is thrown if id is NULL",{
     # When
@@ -211,7 +211,7 @@ describe("When id |> service[['RetrieveById']]()",{
 
     id <- NULL
 
-    expected.error <- 'successful validation requires an Id'
+    expected.error <- 'successful validation requires an id'
 
     # Then
     id |> service[['RetrieveById']]() |> expect.error(expected.error)
@@ -229,7 +229,7 @@ describe("When todo |> service[['Modify']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> head(1)
 
     updated.todo <- existing.todo
-    updated.todo[['Status']] <- 'Done'
+    updated.todo[['status']] <- 'Done'
 
     expected.todo <- updated.todo
 
@@ -237,13 +237,13 @@ describe("When todo |> service[['Modify']]()",{
     updated.todo |> service[['Modify']]()
 
     # Then
-    retrieved.todo <- updated.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- updated.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
 
-    retrieved.todo[['Id']]     |> expect_equal(expected.todo[['Id']])
-    retrieved.todo[['Task']]   |> expect_equal(expected.todo[['Task']])
-    retrieved.todo[['Status']] |> expect_equal(expected.todo[['Status']])
+    retrieved.todo[['id']]     |> expect_equal(expected.todo[['id']])
+    retrieved.todo[['task']]   |> expect_equal(expected.todo[['task']])
+    retrieved.todo[['status']] |> expect_equal(expected.todo[['status']])
   })
-  it('then an exception is thrown if todo has no Id',{
+  it('then an exception is thrown if todo has no id',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -252,17 +252,17 @@ describe("When todo |> service[['Modify']]()",{
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
-      Task = 'Task',
-      Status = 'New'
+      task   = 'Task',
+      status = 'New'
     )
 
     updated.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Id'
+    expected.error <- 'todo data frame has no id'
 
     # Then
     updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Task',{
+  it('then an exception is thrown if todo has no task',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -270,17 +270,17 @@ describe("When todo |> service[['Modify']]()",{
 
     service <-  storage |> Todo.Broker() |> Todo.Service()
     invalid.todo <- data.frame(
-      Id = uuid::UUIDgenerate(),
-      Status = 'New'
+      id     = uuid::UUIDgenerate(),
+      status = 'New'
     )
 
     updated.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Task'
+    expected.error <- 'todo data frame has no task'
 
     # Then
     updated.todo |> service[['Modify']]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Status',{
+  it('then an exception is thrown if todo has no status',{
     # When
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
@@ -289,12 +289,12 @@ describe("When todo |> service[['Modify']]()",{
     service <-  storage |> Todo.Broker() |> Todo.Service()
 
     invalid.todo <- data.frame(
-      Id = uuid::UUIDgenerate(),
-      Task = 'Task'
+      id   = uuid::UUIDgenerate(),
+      task = 'Task'
     )
 
     updated.todo <- invalid.todo
-    expected.error <- 'todo data frame has no Status'
+    expected.error <- 'todo data frame has no status'
 
     # Then
     updated.todo |> service[['Modify']]() |> expect.error(expected.error)
@@ -327,10 +327,10 @@ describe("When id |> service[['Remove']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     # When
-    existing.todo[['Id']] |> service[['Remove']]()
+    existing.todo[['id']] |> service[['Remove']]()
 
     # Then
-    existing.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields) |> expect.empty()
+    existing.todo[['id']] |> storage[['RetrieveWhereId']](table, fields) |> expect.empty()
   })
   it('then an exception is thrown if id is null',{
     # When
@@ -343,7 +343,7 @@ describe("When id |> service[['Remove']]()",{
 
     id <- NULL
 
-    expected.error <- 'successful validation requires an Id'
+    expected.error <- 'successful validation requires an id'
 
     # Then
     id |> service[['Remove']]() |> expect.error(expected.error)

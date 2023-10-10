@@ -85,67 +85,67 @@ describe("When todo |> validate[['HasId']]()",{
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Id = 'Id'
+      id = 'Id'
     )
 
     # Then
     todo |> validate[['HasId']]() |> expect.no.error()
   })
-  it('then an exception is thrown if todo has no Id',{
+  it('then an exception is thrown if todo has no id',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame()
 
-    expected.error <- 'todo data frame has no Id'
+    expected.error <- 'todo data frame has no id'
 
     # Then
     todo |> validate[['HasId']]() |> expect.error(expected.error)
   })
 })
 describe("When todo |> validate[['HasTask']]()",{
-  it('then no exception is thrown if todo has Task',{
+  it('then no exception is thrown if todo has task',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Task = 'Task'
+      task = 'Task'
     )
 
     # Then
     todo |> validate[['HasTask']]() |> expect.no.error()
   })
-  it('then an exception is thrown if todo has no Task',{
+  it('then an exception is thrown if todo has no task',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame()
 
-    expected.error <- 'todo data frame has no Task'
+    expected.error <- 'todo data frame has no task'
 
     # Then
     todo |> validate[['HasTask']]() |> expect.error(expected.error)
   })
 })
 describe("When todo |> validate[['HasStatus']]()",{
-  it('then no exception is thrown if todo has Status',{
+  it('then no exception is thrown if todo has status',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Status = 'Status'
+      status = 'Status'
     )
 
     # Then
     todo |> validate[['HasStatus']]() |> expect.no.error()
   })
-  it('then an exception is thrown if todo has no Status',{
+  it('then an exception is thrown if todo has no status',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame()
 
-    expected.error <- 'todo data frame has no Status'
+    expected.error <- 'todo data frame has no status'
 
     # Then
     todo |> validate[['HasStatus']]() |> expect.error(expected.error)
@@ -157,9 +157,9 @@ describe("When todo |> validate[['Todo']]()",{
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Id     = 'Id',
-      Task   = 'Task',
-      Status = 'Status'
+      id     = 'Id',
+      task   = 'Task',
+      status = 'Status'
     )
 
     # Then
@@ -176,40 +176,40 @@ describe("When todo |> validate[['Todo']]()",{
     # Then
     todo |> validate[['Todo']]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Id',{
+  it('then an exception is thrown if todo has no id',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame()
 
-    expected.error <- 'todo data frame has no Id'
+    expected.error <- 'todo data frame has no id'
 
     # Then
     todo |> validate[['Todo']]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Task',{
+  it('then an exception is thrown if todo has no task',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Id = 'Id'
+      id = 'Id'
     )
 
-    expected.error <- 'todo data frame has no Task'
+    expected.error <- 'todo data frame has no task'
 
     # Then
     todo |> validate[['Todo']]() |> expect.error(expected.error)
   })
-  it('then an exception is thrown if todo has no Status',{
+  it('then an exception is thrown if todo has no status',{
     # Given
     validate <- Todo.Structure.Validation()
 
     todo  <- data.frame(
-      Id     = 'Id',
-      Task   = 'Task'
+      id     = 'Id',
+      task   = 'Task'
     )
 
-    expected.error <- 'todo data frame has no Status'
+    expected.error <- 'todo data frame has no status'
 
     # Then
     todo |> validate[['Todo']]() |> expect.error(expected.error)
@@ -233,7 +233,7 @@ describe("When id |> validate[['IdExist']]()",{
 
     id  <- NULL
 
-    expected.error <- 'successful validation requires an Id'
+    expected.error <- 'successful validation requires an id'
 
     # Then
     id |>

@@ -104,7 +104,7 @@ describe("when todo |> process[['Upsert']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     updated.todo  <- existing.todo
-    updated.todo[['Task']] <- 'Updated Task'
+    updated.todo[['task']] <- 'Updated Task'
 
     expected.todo <- updated.todo
 
@@ -112,11 +112,11 @@ describe("when todo |> process[['Upsert']]()",{
     updated.todo |> process[['Upsert']]()
 
     # Then
-    retrieved.todo <- updated.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- updated.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
 
-    retrieved.todo[['Id']]     |> expect_equal(expected.todo[['Id']])
-    retrieved.todo[['Task']]   |> expect_equal(expected.todo[['Task']])
-    retrieved.todo[['Status']] |> expect_equal(expected.todo[['Status']])
+    retrieved.todo[['id']]     |> expect_equal(expected.todo[['id']])
+    retrieved.todo[['task']]   |> expect_equal(expected.todo[['task']])
+    retrieved.todo[['status']] |> expect_equal(expected.todo[['status']])
   })
 })
 
@@ -132,9 +132,9 @@ describe("then id |> process[['Remove']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     # When
-    existing.todo[['Id']] |> process[['Remove']]()
+    existing.todo[['id']] |> process[['Remove']]()
 
     # Then
-    existing.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields) |> expect.empty()
+    existing.todo[['id']] |> storage[['RetrieveWhereId']](table, fields) |> expect.empty()
   })
 })

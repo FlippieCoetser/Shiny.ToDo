@@ -67,7 +67,7 @@ describe("When todo |> operation[['Insert']]()",{
     new.todo |> operation[['Insert']]()
 
     # Then
-    retrieved.todo <- new.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- new.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
     
     retrieved.todo |> expect.equal.data(expected.todo)
   })
@@ -107,7 +107,7 @@ describe("When id |> operation[['SelectById']]()",{
     expected.todo <- existing.todo
 
     # When
-    retrieved.todo <- input.todo[['Id']] |> operation[['SelectById']]()
+    retrieved.todo <- input.todo[['id']] |> operation[['SelectById']]()
 
     # Then
     retrieved.todo |> expect.equal.data(expected.todo)
@@ -126,7 +126,7 @@ describe("When todo |> operation[['Update']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> head(1)
 
     updated.todo <- existing.todo
-    updated.todo[['Status']] <- 'Updated'
+    updated.todo[['status']] <- 'Updated'
 
     expected.todo <- updated.todo
 
@@ -134,7 +134,7 @@ describe("When todo |> operation[['Update']]()",{
     updated.todo |> operation[['Update']]()
 
     # Then
-    retrieved.todo <- updated.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- updated.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
 
     updated.todo |> expect.equal.data(retrieved.todo)
   })
@@ -152,10 +152,10 @@ describe("When id |> operation[['Delete']]()",{
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     # When
-    existing.todo[['Id']] |> operation[['Delete']]()
+    existing.todo[['id']] |> operation[['Delete']]()
 
     # Then
-    retrieved.todo <- existing.todo[['Id']] |> storage[['RetrieveWhereId']](table, fields)
+    retrieved.todo <- existing.todo[['id']] |> storage[['RetrieveWhereId']](table, fields)
     
     retrieved.todo |> expect.empty()
   })

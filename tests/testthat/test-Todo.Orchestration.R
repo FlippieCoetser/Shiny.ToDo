@@ -67,20 +67,20 @@ describe('When todo |> orchestrate[["UpsertRetrieve"]]()',{
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
 
     updated.todo  <- existing.todo
-    updated.todo[['Task']] <- 'Updated Task'
+    updated.todo[['task']] <- 'Updated Task'
     
     expected.todo <- updated.todo
 
     # When
     retrieved.todos <- updated.todo |> orchestrate[['UpsertRetrieve']]()
-    retrieved.todo  <- retrieved.todos[retrieved.todos[['Id']] == updated.todo[['Id']],] 
+    retrieved.todo  <- retrieved.todos[retrieved.todos[['id']] == updated.todo[['id']],] 
 
     # Then
     retrieved.todos |> expect.contain(expected.todo)
 
-    retrieved.todo[['Id']]     |> expect.equal(expected.todo[['Id']])
-    retrieved.todo[['Task']]   |> expect.equal(expected.todo[['Task']])
-    retrieved.todo[['Status']] |> expect.equal(expected.todo[['Status']])
+    retrieved.todo[['id']]     |> expect.equal(expected.todo[['id']])
+    retrieved.todo[['task']]   |> expect.equal(expected.todo[['task']])
+    retrieved.todo[['status']] |> expect.equal(expected.todo[['status']])
   })
 })
 
@@ -114,7 +114,7 @@ describe("When id |> orchestrate[['DeleteRetrieve']]()",{
     orchestrate <- storage |> Todo.Orchestration()
 
     existing.todo <- table |> storage[['Retrieve']](fields) |> tail(1)
-    existing.id <- existing.todo[['Id']]
+    existing.id <- existing.todo[['id']]
 
     # When 
     retrieved.todos <- existing.id |> orchestrate[['DeleteRetrieve']]()

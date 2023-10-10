@@ -14,15 +14,15 @@ Todo.Structure.Validation <- \(){
     return(todo)
   }
   validators[["HasId"]]     <- \(todo) {
-    todo[["Id"]] |> is.null() |> exception[["TodoIdIsNull"]]()
+    todo[["id"]] |> is.null() |> exception[["TodoIdIsNull"]]()
     return(todo)
   }
   validators[["HasTask"]]   <- \(todo) {
-    todo[["Task"]] |> is.null() |> exception[["TodoTaskIsNull"]]()
+    todo[["task"]] |> is.null() |> exception[["TodoTaskIsNull"]]()
     return(todo)
   }
   validators[["HasStatus"]] <- \(todo) {
-    todo[["Status"]] |> is.null() |> exception[["TodoStatusIsNull"]]()
+    todo[["status"]] |> is.null() |> exception[["TodoStatusIsNull"]]()
       return(todo)
   }
   validators[["IdExist"]]   <- \(id) {

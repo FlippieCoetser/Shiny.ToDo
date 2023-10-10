@@ -31,21 +31,21 @@ Todo.Controller <- \(id, data) {
         if (verify[["todoSelected"]]()) {
           state[["todo"]] <- state[["todos"]][input[["todos_rows_selected"]],]
 
-          session |> updateTextInput("task", value = state[["todo"]][["Task"]])
-          session |> updateTextInput("status", value = state[["todo"]][["Status"]])
+          session |> updateTextInput("task", value = state[["todo"]][["task"]])
+          session |> updateTextInput("status", value = state[["todo"]][["status"]])
 
         } else {
           state[["todo"]] <- NULL
         }
       }
       controller[['update']] <- \() {
-        state[['todo']][["Task"]]   <- input[["task"]]
-        state[['todo']][["Status"]] <- input[["status"]]
+        state[['todo']][["task"]]   <- input[["task"]]
+        state[['todo']][["status"]] <- input[["status"]]
 
         state[["todos"]] <- state[['todo']] |> data[["UpsertRetrieve"]]()
       }
       controller[['delete']] <- \() {
-        state[["todos"]] <- state[["todo"]][["Id"]] |> data[['DeleteRetrieve']]()
+        state[["todos"]] <- state[["todo"]][["id"]] |> data[['DeleteRetrieve']]()
       }
 
       # Table Configuration

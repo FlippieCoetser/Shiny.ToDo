@@ -4,7 +4,7 @@ Todo.Logic.Validation <- \() {
   validators <- list()
   validators[["IsDuplicate"]] <-  \(todo,todos) {
     match.count <- 
-      todos |> dplyr::filter(Id == todo[["Id"]]) |> nrow()
+      todos |> dplyr::filter(id == todo[["id"]]) |> nrow()
         
     (match.count != 0) |> exception[["DuplicateKey"]]()
 

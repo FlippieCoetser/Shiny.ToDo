@@ -95,7 +95,7 @@ describe("When input |> exception[['TodoIdIsNull']]()",{
 
     input <- TRUE
 
-    expected.error <- 'todo data frame has no Id'
+    expected.error <- 'todo data frame has no id'
 
     # Then
     input |> exception[["TodoIdIsNull"]]() |> expect.error(expected.error)
@@ -117,7 +117,7 @@ describe("When input |> exception[['TodoTaskIsNull']]()",{
 
     input <- TRUE
 
-    expected.error <- 'todo data frame has no Task'
+    expected.error <- 'todo data frame has no task'
 
     # Then
     input |> exception[["TodoTaskIsNull"]]() |> expect.error(expected.error)
@@ -139,7 +139,7 @@ describe("When input |> exception[['TodoStatusIsNull']]()",{
 
     input <- TRUE
 
-    expected.error <- 'todo data frame has no Status'
+    expected.error <- 'todo data frame has no status'
 
     # Then
     input |> exception[["TodoStatusIsNull"]]() |> expect.error(expected.error)
@@ -183,7 +183,7 @@ describe("When input |> exception[['IdIsNull']]()",{
 
     input <- TRUE
 
-    expected.error <- 'successful validation requires an Id'
+    expected.error <- 'successful validation requires an id'
 
     # Then
     input |> exception[["IdIsNull"]]() |> expect.error(expected.error)
