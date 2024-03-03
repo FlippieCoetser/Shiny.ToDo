@@ -2,7 +2,7 @@ Todo.Broker <- \(storage){
   sql.utilities <- Query::SQL.Utilities()
   sql.functions <- Query::SQL.Functions()
 
-  table <- 'Todo'
+  table <- 'ToDo'
   fields <- list(
     'id'     |> sql.utilities[['BRACKET']]() |> sql.functions[['LOWER']]('id'),
     'task'   |> sql.utilities[['BRACKET']](),
