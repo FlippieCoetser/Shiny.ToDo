@@ -56,7 +56,7 @@ describe("When todo |> operation[['Insert']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
     
-    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('ToDo')
 
     operation <- storage |> Todo.Broker()
 
@@ -78,7 +78,7 @@ describe("When operation[['Select']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
     
-    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('ToDo')
 
     operation <- storage |> Todo.Broker()
 
@@ -97,7 +97,7 @@ describe("When id |> operation[['SelectById']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
 
-    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('ToDo')
     
     operation <- storage |> Todo.Broker()
     
@@ -119,7 +119,7 @@ describe("When todo |> operation[['Update']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
     
-    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('ToDo')
 
     operation <- storage |> Todo.Broker()
 
@@ -145,7 +145,7 @@ describe("When id |> operation[['Delete']]()",{
     configuration <- data.frame()
     storage <- configuration |> Storage::Storage('memory')
     
-    Todo.Mock.Data |> storage[['Seed.Table']]('Todo')
+    Todo.Mock.Data |> storage[['Seed.Table']]('ToDo')
 
     operation <- storage |> Todo.Broker()
 
